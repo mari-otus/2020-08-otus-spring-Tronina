@@ -1,5 +1,7 @@
 package ru.otus.spring.service;
 
+import java.io.InputStream;
+
 /**
  * Сервис для работы с сообщениями.
  *
@@ -15,14 +17,10 @@ public interface MessageService {
     void outMessage(String message);
 
     /**
-     * Получает сообщение из потока.
+     * Возвращает входной поток.
      *
-     * @return сообщение
+     * @return входной поток
      */
-    String getMessage();
+    InputStream getInputStream();
 
-    /**
-     * Закрывает поток.
-     */
-    void close();
 }
