@@ -24,7 +24,7 @@ import java.util.List;
 public class QuestionDaoSimple implements QuestionDao {
 
     private final Resource resource;
-    private CsvMapper csvMapper = new CsvMapper();
+    private final CsvMapper csvMapper;
 
     @Override
     public List<Question> findAllQuestion() {

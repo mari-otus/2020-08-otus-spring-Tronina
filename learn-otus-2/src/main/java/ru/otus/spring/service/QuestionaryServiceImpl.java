@@ -8,7 +8,6 @@ import ru.otus.spring.domain.Question;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Сервис для запуска тестирования.
@@ -48,11 +47,8 @@ public class QuestionaryServiceImpl implements QuestionaryService {
             messageService.outMessage(ERROR_TEST);
             return;
         }
-
-        Scanner scanner = new Scanner(messageService.getInputStream());
-
         messageService.outMessage(WELCOME);
-        String fio = scanner.nextLine();
+        String fio = messageService.getMessage();
         questionList.forEach(
                     question -> {
                         if (!StringUtils.isEmpty(question.getAnswers())) {
@@ -60,19 +56,19 @@ public class QuestionaryServiceImpl implements QuestionaryService {
                             messageService.outMessage(question.getText());
                             answerList.forEach(messageService::outMessage);
 
-                            String variant = scanner.nextLine();
+                            String variant = messageService.getMessage();
                             while (!variant.matches("\\d+") ||
-                                    Integer.parseInt(variant) > answerList.size()) {
+                                    Integer.valueOf(variant) > answerList.size()) {
                                 messageService.outMessage(INCORRECT_VARIANT);
-                                variant = scanner.nextLine();
+                                variant = messageService.getMessage();
                             }
-                            if (Integer.parseInt(variant) > 0) {
+                            if (Integer.valueOf(variant) > 0) {
                                 messageService.outMessage(YOU_ANSWER + variant);
                                 incCountAnswer();
                             }
                         } else {
                             messageService.outMessage(question.getText());
-                            String answer = scanner.nextLine();
+                            String answer = messageService.getMessage();
                             if (answer != null && answer.length() > 0) {
                                 messageService.outMessage(YOU_ANSWER + answer);
                                 incCountAnswer();
@@ -81,7 +77,7 @@ public class QuestionaryServiceImpl implements QuestionaryService {
                     }
             );
         messageService.outMessage(String.format(RESUME, fio, countAnswer, questionList.size()));
-        scanner.close();
+        messageService.close();
     }
 
     /**
