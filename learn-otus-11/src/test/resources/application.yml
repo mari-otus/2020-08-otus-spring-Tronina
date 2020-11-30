@@ -1,0 +1,12 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 0
+      database: dblibrary
+    sql-script-encoding: utf-8
+
+logging:
+  level:
+    ru.otus: info
+    org.springframework: info
