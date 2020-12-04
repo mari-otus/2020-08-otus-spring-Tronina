@@ -1,0 +1,4 @@
+logging:
+  level:
+    ru.otus: debug
+    org.springframework: info

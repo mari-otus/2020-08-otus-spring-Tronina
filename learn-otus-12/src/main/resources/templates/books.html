@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Library Application</title>
+</head>
+
+<body>
+
+<div th:insert="header.html"></div>
+
+<h1>Список книг</h1>
+<table class="books">
+    <thead>
+    <tr>
+        <th>Наименование книги</th>
+        <th>Год издания книги</th>
+        <th>Автор</th>
+        <th>Жанр</th>
+        <th>Изменить книгу</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.name}">John Doe</td>
+        <td th:text="${book.yearEdition}">1</td>
+        <td>
+            <ul>
+                <li th:each="author : ${book.authors}" th:text="${author.fio}">author name</li>
+            </ul>
+        </td>
+        <td>
+            <ul>
+                <li th:each="genre : ${book.genres}" th:text="${genre.name}">genre name</li>
+            </ul>
+        </td>
+        <td>
+            <a th:href="@{/books/__${book.id}__}" href="edit.html">edit</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
