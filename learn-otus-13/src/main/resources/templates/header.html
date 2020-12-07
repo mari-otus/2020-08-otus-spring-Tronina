@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Library Application</title>
+</head>
+<body>
+<a th:href="@{/logout}">Выход</a>
+<a th:href="@{/}">Главная</a>
+<br/>
+<h3 th:text="'Пользователь: ' + ${#authentication.getPrincipal()?.fio}"></h3>
+</body>
+</html>
