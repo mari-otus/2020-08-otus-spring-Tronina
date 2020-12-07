@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.collections4.SetUtils;
-import ru.otus.spring.domain.Author;
-import ru.otus.spring.domain.Genre;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

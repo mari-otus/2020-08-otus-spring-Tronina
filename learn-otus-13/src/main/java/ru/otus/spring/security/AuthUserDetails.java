@@ -5,7 +5,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.otus.spring.domain.User;
-import ru.otus.spring.domain.UserRole;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
