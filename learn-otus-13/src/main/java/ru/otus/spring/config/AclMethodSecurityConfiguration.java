@@ -10,16 +10,7 @@ import org.springframework.security.config.annotation.method.configuration.Globa
  * @author MTronina
  */
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AclMethodSecurityConfiguration extends GlobalMethodSecurityConfiguration {
-
-    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
-    @Autowired
-    MethodSecurityExpressionHandler defaultMethodSecurityExpressionHandler;
-
-    @Override
-    protected MethodSecurityExpressionHandler createExpressionHandler() {
-        return defaultMethodSecurityExpressionHandler;
-    }
 
 }
