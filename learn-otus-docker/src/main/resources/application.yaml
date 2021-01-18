@@ -1,0 +1,31 @@
+server:
+  port: 8087
+  servlet:
+    context-path: /library
+
+spring:
+  datasource:
+    driver-class-name: ${DB_DRIVER}
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    initialization-mode: always
+    schema: classpath:schema.sql, classpath:schema_acl.sql
+    data: classpath:data.sql, classpath:data_acl.sql
+    sql-script-encoding: utf-8
+
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+
+    properties:
+      hibernate:
+        format_sql: true
+
+    show-sql: true
+
+logging:
+  level:
+    ru.otus: debug
+    org.springframework: debug
