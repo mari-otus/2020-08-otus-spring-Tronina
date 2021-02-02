@@ -1,0 +1,60 @@
+server:
+  port: 8087
+  servlet:
+    context-path: /library
+
+spring:
+  application:
+    name: library
+  data:
+    rest:
+      base-path: /api
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/library
+    username: postgres
+    password: postgres
+    initialization-mode: always
+    schema: classpath:schema.sql, classpath:schema_acl.sql
+    data: classpath:data.sql, classpath:data_acl.sql
+    sql-script-encoding: utf-8
+
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+
+    properties:
+      hibernate:
+        format_sql: true
+
+    show-sql: true
+
+logging:
+  level:
+    ru.otus: debug
+    org.springframework: debug
+  file:
+    name: ${spring.application.name}.log
+  pattern:
+    dateformat: "dd.MM.yyyy HH:mm:ss.SSSS"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,logfile,loggers"
+  endpoint:
+    health:
+      show-details: always
+    loggers:
+      enabled: true
+      cache:
+        time-to-live: 0ms
+    logfile:
+      enabled: true
+      cache:
+        time-to-live: 0ms
+  health:
+    defaults:
+      enabled: true
