@@ -1,0 +1,46 @@
+server:
+  port: 8087
+  servlet:
+    context-path: /booking_meeting_rooms
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/booking_room
+    username: postgres
+    password: postgres
+    initialization-mode: always
+    sql-script-encoding: utf-8
+  flyway:
+    enabled: true
+    encoding: UTF-8
+    locations: classpath:/db/migration/
+    validate-on-migrate: true
+    baseline-on-migrate: true
+    out-of-order: true
+
+  data:
+    mongodb:
+      host: localhost
+      port: 27018
+      database: booking_room
+
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+
+    properties:
+      hibernate:
+        format_sql: true
+
+    show-sql: true
+
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+
+logging:
+  level:
+    ru.otus: debug
+    org.springframework: debug
