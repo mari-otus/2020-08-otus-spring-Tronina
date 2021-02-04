@@ -15,7 +15,7 @@ public class BookingFilter {
 
     private String roomName;
 
-    private Long userId;
+    private String login;
 
     private Period startBooking;
 

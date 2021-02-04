@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import ru.otus.spring.domain.Booking;
 import ru.otus.spring.domain.Room;
@@ -11,8 +12,8 @@ import ru.otus.spring.dto.RoomDto;
 import ru.otus.spring.dto.RoomFilter;
 import ru.otus.spring.exception.ApplicationException;
 import ru.otus.spring.mapper.BookingMapper;
-import ru.otus.spring.repository.room.BookingRepository;
-import ru.otus.spring.repository.room.RoomRepository;
+import ru.otus.spring.repository.BookingRepository;
+import ru.otus.spring.repository.RoomRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,12 +29,14 @@ public class RoomServiceImpl implements RoomService {
     private final BookingRepository bookingRepository;
     private final BookingMapper mapper;
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
     public void createRoom(RoomDto roomRequest) {
         Room room = mapper.toRoom(roomRequest);
         roomRepository.save(room);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
     public void updateRoom(Long roomId, RoomDto roomRequest) {
         Room room = roomRepository.findById(roomId)
@@ -54,6 +57,7 @@ public class RoomServiceImpl implements RoomService {
         roomRepository.save(room);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
     public void deleteRoom(Long roomId) {
         Room room = roomRepository.findById(roomId)

@@ -40,6 +40,10 @@ spring:
     serialization:
       write_dates_as_timestamps: false
 
+integration:
+  users:
+    url: http://localhost:8083/booking_users
+
 logging:
   level:
     ru.otus: debug

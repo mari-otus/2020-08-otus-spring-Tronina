@@ -38,18 +38,14 @@ public class Booking {
     @JoinColumn(name = "room_id", referencedColumnName = "id")
     private Room room;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    @Column(name = "login", nullable = false)
+    private String login;
 
     @Column(name = "begin_date")
     private LocalDateTime beginDate;
 
     @Column(name = "end_date")
     private LocalDateTime endDate;
-
-    @Column(name = "status")
-    private Status status;
 
     @CreationTimestamp
     @Column(name = "create_date")

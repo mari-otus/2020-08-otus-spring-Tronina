@@ -24,6 +24,12 @@ public class UserController {
 
     private final UserService userService;
 
+    @GetMapping("/users/{login}")
+    ResponseEntity<UserDto> getUserByLogin(@PathVariable String login) {
+        UserDto user = userService.getUserByLogin(login);
+        return ResponseEntity.ok(user);
+    }
+
     @GetMapping("/users")
     public ResponseEntity<Page<UserDto>> getUsers(Pageable pageable) {
         Page<UserDto> users = userService.getUsers(pageable);

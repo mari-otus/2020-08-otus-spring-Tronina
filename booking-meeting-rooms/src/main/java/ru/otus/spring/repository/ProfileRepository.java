@@ -1,4 +1,4 @@
-package ru.otus.spring.repository.user;
+package ru.otus.spring.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.otus.spring.domain.Profile;
@@ -12,5 +12,5 @@ import java.util.Optional;
  */
 public interface ProfileRepository extends JpaRepository<Profile, Long> {
 
-    Optional<Profile> findByUserId(Long userId);
+    Optional<Profile> findByLoginEquals(String login);
 }

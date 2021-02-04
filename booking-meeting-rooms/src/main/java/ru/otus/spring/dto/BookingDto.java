@@ -12,6 +12,8 @@ public class BookingDto {
 
     private Long roomId;
 
+    private String login;
+
     private LocalDateTime beginDate;
 
     private LocalDateTime endDate;

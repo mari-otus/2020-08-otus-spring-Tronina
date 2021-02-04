@@ -5,8 +5,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.otus.spring.exception.ApplicationException;
-import ru.otus.spring.repository.user.UserRepository;
+import ru.otus.spring.client.UserClient;
+import ru.otus.spring.dto.UserDto;
 
 /**
  * Сервис для получения данных пользователя.
@@ -19,11 +19,11 @@ public class DbUserDetailsService implements UserDetailsService {
     /**
      * Репозиторий для работы с пользователями.
      */
-    private final UserRepository userRepository;
+    private final UserClient userClient;
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        return new AuthUserDetails(userRepository.findByLogin(login)
-                .orElseThrow(ApplicationException::new));
+        UserDto user = userClient.getUserByLogin(login).getBody();
+        return new AuthUserDetails(user);
     }
 }

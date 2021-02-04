@@ -10,5 +10,7 @@ public interface ProfileService {
 
     ProfileDto getProfile(AuthUserDetails authUserDetails);
 
+    ProfileDto createProfile(AuthUserDetails authUserDetails);
+
     void updateProfile(ProfileDto updateRequest, AuthUserDetails authUserDetails);
 }

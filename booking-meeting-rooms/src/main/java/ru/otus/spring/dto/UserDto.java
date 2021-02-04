@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.otus.spring.domain.UserRole;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -29,6 +28,8 @@ public class UserDto {
      * Логин пользователя.
      */
     private String login;
+
+    private String password;
 
     /**
      * ФИО пользователя.
@@ -58,5 +59,6 @@ public class UserDto {
     /**
      * Список ролей пользователя.
      */
-    private Set<UserRole> roles;
+    private Set<UserRoleDto> roles;
+
 }
