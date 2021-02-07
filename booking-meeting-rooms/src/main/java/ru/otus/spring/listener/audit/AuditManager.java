@@ -1,9 +1,7 @@
-package ru.otus.spring.audit;
+package ru.otus.spring.listener.audit;
 
 import lombok.RequiredArgsConstructor;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -20,18 +18,14 @@ import java.util.stream.Collectors;
 /**
  * @author MTronina
  */
-@Aspect
 @Component
 @RequiredArgsConstructor
-public class BookingMeetingRoomsAudit {
+@ConditionalOnProperty(name = "app.audit.enabled", havingValue = "true")
+public class AuditManager {
 
     private final BookingAuditRepository bookingAuditRepository;
 
-    @AfterReturning(
-            pointcut = "execution(* ru.otus.spring.repository.BookingRepository.save(..))",
-            returning = "booking"
-    )
-    public void auditAfterReturning(JoinPoint joinPoint, Booking booking) {
+    public void insertAuditEntry(Booking booking) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
         AuthUserDetails userDetails = (AuthUserDetails) authenticationToken.getPrincipal();

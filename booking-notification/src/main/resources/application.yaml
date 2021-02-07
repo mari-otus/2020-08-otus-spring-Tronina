@@ -1,0 +1,33 @@
+server:
+  port: 8085
+  servlet:
+    context-path: /booking_notification
+
+spring:
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+
+  mail:
+    host: smtp.mail.ru
+    port: 465
+    username: ${email.server.user}
+    password: ${email.server.password}
+    protocol: smtps
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+
+integration:
+  users:
+    url: http://localhost:8083/booking_users
+
+app:
+  admin-email: ${admin.email}
+
+logging:
+  level:
+    ru.otus: debug
+    org.springframework: debug

@@ -1,6 +1,7 @@
 drop table if exists bookings;
 drop table if exists rooms;
 drop table if exists profiles;
+drop table if exists subscribings;
 
 ------------------------------
 -- table: rooms             --
@@ -68,6 +69,26 @@ comment on column profiles.email is 'email пользователя';
 comment on column profiles.mobile_phone is 'Номер сотового телефона пользователя';
 comment on column profiles.is_email_notify is 'Оповещение по email';
 comment on column profiles.is_phone_notify is 'Оповещение по sms';
+
+------------------------------
+-- table: subscribings      --
+------------------------------
+create table subscribings
+(
+    id          bigserial
+        constraint subscribings_pk
+            primary key,
+    room_id     int       not null,
+    login       text      not null,
+    create_date timestamp default current_timestamp,
+    update_date timestamp,
+    delete_date timestamp
+);
+
+alter table if exists subscribings
+    add constraint subscribings_room_fk
+        foreign key (room_id)
+            references rooms;
 
 alter sequence if exists rooms_id_seq restart with 10;
 alter sequence if exists profiles_id_seq restart with 10;

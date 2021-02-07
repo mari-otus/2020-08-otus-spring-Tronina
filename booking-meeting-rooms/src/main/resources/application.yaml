@@ -41,8 +41,21 @@ spring:
       write_dates_as_timestamps: false
 
 integration:
-  users:
-    url: http://localhost:8083/booking_users
+  service:
+    users:
+      url: http://localhost:8083/booking_users
+    notification:
+      url: http://localhost:8085/booking_notification
+  auth:
+    username: ${notification.username}
+    password: ${notification.password}
+
+app:
+  audit:
+    enabled: true
+    listener: hibernate #spring, hibernate
+  notify:
+    enabled: true
 
 logging:
   level:

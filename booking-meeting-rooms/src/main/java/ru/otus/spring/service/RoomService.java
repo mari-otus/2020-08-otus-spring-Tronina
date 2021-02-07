@@ -17,4 +17,5 @@ public interface RoomService {
     void deleteRoom(Long roomId);
 
     Page<RoomDto> getRooms(RoomFilter roomFilter, Pageable pageable);
+
 }

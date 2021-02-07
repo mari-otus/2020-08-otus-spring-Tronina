@@ -1,11 +1,9 @@
 package ru.otus.spring.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PostFilter;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.domain.Booking;
 import ru.otus.spring.domain.Room;
 import ru.otus.spring.dto.BookingDto;
@@ -31,6 +29,7 @@ public class BookingServiceImpl implements BookingService {
     private final RoomRepository roomRepository;
     private final BookingMapper mapper;
 
+    @Transactional
     @Override
     public void createBooking(BookingDto bookingRequest, AuthUserDetails authUserDetails) {
         Room room = roomRepository.findById(bookingRequest.getRoomId())
@@ -72,14 +71,7 @@ public class BookingServiceImpl implements BookingService {
         bookingRepository.save(booking);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @Override
-    public Page<BookingDto> getBookings(BookingFilter bookingFilter, Pageable pageable) {
-        return bookingRepository.findAllByFilter(bookingFilter, pageable)
-                .map(mapper::toBookingDto);
-    }
-
-    @PostFilter("filterObject.login == authentication.name")
+    @PostFilter("hasRole('ROLE_ADMIN') or filterObject.login == authentication.name")
     @Override
     public List<BookingDto> getBookings(BookingFilter bookingFilter) {
         return bookingRepository.findAllByFilter(bookingFilter).stream()

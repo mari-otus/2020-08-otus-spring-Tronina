@@ -75,4 +75,5 @@ public class RoomServiceImpl implements RoomService {
         return roomRepository.findAllByFilter(roomFilter, pageable)
                 .map(mapper::toRoomDto);
     }
+
 }
