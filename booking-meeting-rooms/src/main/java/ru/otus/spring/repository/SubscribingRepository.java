@@ -15,6 +15,8 @@ public interface SubscribingRepository extends JpaRepository<Subscribing, Long> 
 
     List<Subscribing> findAllByLoginEquals(String login);
 
+    List<Subscribing> findAllByDeleteDateIsNull();
+
     List<Subscribing> findAllByRoom_Id(Long roomId);
 
     Optional<Subscribing> findByLoginEqualsAndRoomId(String login, Long roomId);

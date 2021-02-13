@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Booking meeting rooms Application</title>
+</head>
+
+<body>
+
+<div th:insert="header.html"></div>
+
+<h1>Редактирование переговорки</h1>
+<form id="edit-form">
+    <div class="row">
+        <label for="room_name">Название переговорки:</label>
+        <input id="room_name" name="roomName" type="text"
+               th:value="${room.roomName}"/>
+    </div>
+
+    <div class="row">
+        <label for="capacity">Вместимость (человек):</label>
+        <input id="capacity" name="capacity" type="text"
+               th:value="${room.capacity}"/>
+    </div>
+
+    <div class="row">
+        <label for="hasVideoconference">Возможность проводить видеоконференции:</label>
+        <input id="hasVideoconference" name="hasVideoconference" type="checkbox"
+               th:checked="${room.hasVideoconference ? 'checked' : ''}"/>
+    </div>
+
+    <div class="row">
+        <label for="hasConditioner">Наличие кондиционера":</label>
+        <input id="hasConditioner" name="hasConditioner" type="checkbox"
+               th:checked="${room.hasConditioner ? 'checked' : ''}"/>
+    </div>
+    <div class="row">
+        <button type="button" th:onclick="'javascript:saveb('+${room.id}+')'">save and close</button>
+    </div>
+</form>
+
+<script>
+    function saveb(id) {
+        const room_name = document.getElementById("room_name").value;
+        const capacity = document.getElementById("capacity").value;
+        const hasVideoconference = $("#hasVideoconference").is(":checked");
+        const hasConditioner = $("#hasConditioner").is(":checked");
+        let type = 'POST';
+        let url = '/booking_meeting_rooms/api/rooms/';
+        if (id !== null) {
+            type = 'PUT';
+            url = url + id;
+        }
+        $.ajax({
+            type: type,
+            url: url,
+            data: JSON.stringify({
+                "roomName": room_name,
+                "capacity": capacity,
+                "hasVideoconference": hasVideoconference,
+                "hasConditioner": hasConditioner
+            }),
+            dataType: "json",
+            contentType: "application/json"
+        }).always(function () {
+            document.location.href = "/booking_meeting_rooms/rooms";
+        });
+    }
+</script>
+</body>
+</html>

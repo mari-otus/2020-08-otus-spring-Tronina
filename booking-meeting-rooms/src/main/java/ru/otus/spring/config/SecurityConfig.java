@@ -43,8 +43,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/profiles/**").authenticated()
                 .and()
                 .formLogin()
+                .permitAll()
                 .and()
                 .logout()
+                .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID");
     }

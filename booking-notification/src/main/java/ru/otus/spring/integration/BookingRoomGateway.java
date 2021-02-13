@@ -8,6 +8,9 @@ import ru.otus.spring.model.BookingNotify;
 @MessagingGateway
 public interface BookingRoomGateway {
 
-    @Gateway(requestChannel = "bookingRoomInChannel")
-    void processNotify(@Payload BookingNotify booking);
+    @Gateway(requestChannel = "bookingRoomInEmailChannel")
+    void processEmailNotify(@Payload BookingNotify booking);
+
+    @Gateway(requestChannel = "bookingRoomInSmsChannel")
+    void processSmsNotify(@Payload BookingNotify booking);
 }

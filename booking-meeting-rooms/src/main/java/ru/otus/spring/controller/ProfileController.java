@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.otus.spring.dto.ProfileDto;
 import ru.otus.spring.security.AuthUserDetails;
@@ -21,6 +22,7 @@ import java.security.Principal;
 @Api(tags = "Сервис работы с профилем")
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class ProfileController {
 
     private final ProfileService profileService;

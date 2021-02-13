@@ -19,7 +19,8 @@ public class NotificationController {
 
     @PostMapping("/notify")
     public ResponseEntity<Void> notify(@RequestBody BookingNotify bookingNotify) {
-        bookingRoomGateway.processNotify(bookingNotify);
+        bookingRoomGateway.processEmailNotify(bookingNotify);
+        bookingRoomGateway.processSmsNotify(bookingNotify);
         return ResponseEntity.ok().build();
     }
 }

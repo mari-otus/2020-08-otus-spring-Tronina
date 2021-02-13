@@ -1,8 +1,5 @@
 package ru.otus.spring.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import ru.otus.spring.domain.Room;
 import ru.otus.spring.dto.RoomFilter;
 
@@ -20,7 +17,7 @@ public class RoomCustomRepositoryImpl implements RoomCustomRepository {
     private EntityManager em;
 
     @Override
-    public Page<Room> findAllByFilter(RoomFilter filter, Pageable pageable) {
+    public List<Room> findAllByFilter(RoomFilter filter) {
         Query query = em.createQuery("select r from Room r " +
                 "where r.deleteDate is null " +
                         (filter.getCapacity() != null ? "and  r.capacity = :capacity " : "") +
@@ -40,7 +37,6 @@ public class RoomCustomRepositoryImpl implements RoomCustomRepository {
         if (filter.getHasConditioner() != null) {
             query.setParameter("hasConditioner", filter.getHasConditioner());
         }
-        List<Room> roomList = query.getResultList();
-        return new PageImpl<>(roomList, pageable, roomList.size());
+        return query.getResultList();
     }
 }

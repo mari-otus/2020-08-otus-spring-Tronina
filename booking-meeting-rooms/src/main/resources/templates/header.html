@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Booking meeting rooms Application</title>
+    <script src="/booking_meeting_rooms/webjars/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<h1>Бронирование переговорных комнат</h1>
+<a th:href="@{/logout}">Выход</a>
+<a th:href="@{/}">Главная</a>
+<br/>
+<h3 th:text="'Пользователь: ' + ${#authentication.getPrincipal()?.fio}"></h3>
+</body>
+</html>

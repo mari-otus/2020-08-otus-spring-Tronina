@@ -62,21 +62,31 @@ public class BookingServiceImpl implements BookingService {
         bookingRepository.save(booking);
     }
 
+    @PostFilter("hasRole('ROLE_ADMIN') or filterObject.login == authentication.name")
+    @Transactional
     @Override
-    public void deleteBooking(Long bookingId, AuthUserDetails authUserDetails) {
+    public List<BookingDto> deleteBooking(Long bookingId, AuthUserDetails authUserDetails) {
         Booking booking = bookingRepository.findByIdEqualsAndAndLoginEquals(bookingId,
                 authUserDetails.getUsername())
                 .orElseThrow(ApplicationException::new);
         booking.setDeleteDate(LocalDateTime.now());
         bookingRepository.save(booking);
+        return getBookings(BookingFilter.builder().build());
     }
 
     @PostFilter("hasRole('ROLE_ADMIN') or filterObject.login == authentication.name")
     @Override
     public List<BookingDto> getBookings(BookingFilter bookingFilter) {
-        return bookingRepository.findAllByFilter(bookingFilter).stream()
+        return bookingRepository.findAllActiveByFilter(bookingFilter).stream()
                 .map(mapper::toBookingDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public BookingDto getBooking(Long bookingId) {
+        return bookingRepository.findById(bookingId)
+                .map(mapper::toBookingDto)
+                .orElseThrow(ApplicationException::new);
     }
 
 }

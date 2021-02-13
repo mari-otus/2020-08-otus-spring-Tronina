@@ -9,6 +9,18 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("app")
 public class NotificationProperties {
 
-    private String adminEmail;
+    private Email email;
+    private Twilio sms;
 
+    @Data
+    public static class Email {
+        private String adminEmail;
+    }
+
+    @Data
+    public static class Twilio {
+        private String twilioAccountSid;
+        private String twilioAuthToken;
+        private String twilioPhoneNumber;
+    }
 }

@@ -15,7 +15,9 @@ public interface BookingService {
 
     void updateBooking(Long bookingId, BookingDto bookingRequest, AuthUserDetails authUserDetails);
 
-    void deleteBooking(Long bookingId, AuthUserDetails authUserDetails);
+    List<BookingDto> deleteBooking(Long bookingId, AuthUserDetails authUserDetails);
 
     List<BookingDto> getBookings(BookingFilter bookingFilter);
+
+    BookingDto getBooking(Long bookingId);
 }

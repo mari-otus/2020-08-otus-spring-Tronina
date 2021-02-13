@@ -2,18 +2,21 @@ package ru.otus.spring.controller;
 
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.otus.spring.dto.RoomDto;
 import ru.otus.spring.dto.RoomFilter;
+import ru.otus.spring.dto.RoomResponseDto;
 import ru.otus.spring.service.RoomService;
+import ru.otus.spring.service.SubscribingService;
+
+import java.util.List;
 
 /**
  * @author MTronina
@@ -21,9 +24,11 @@ import ru.otus.spring.service.RoomService;
 @Api(tags = "Сервис создания переговорок")
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class RoomController {
 
     private final RoomService roomService;
+    private final SubscribingService subscribingService;
 
     @PostMapping("/rooms")
     public ResponseEntity<Void> createRoom(
@@ -41,16 +46,16 @@ public class RoomController {
     }
 
     @DeleteMapping("/rooms/{roomId}")
-    public ResponseEntity<Void> deleteRoom(
+    public ResponseEntity<List<RoomResponseDto>> deleteRoom(
             @PathVariable Long roomId) {
-        roomService.deleteRoom(roomId);
-        return ResponseEntity.ok().build();
+        List<RoomResponseDto> rooms = roomService.deleteRoom(roomId);
+        return ResponseEntity.ok(rooms);
     }
 
     @PostMapping("/rooms/search")
-    public ResponseEntity<Page<RoomDto>> getRooms(
-            @RequestBody RoomFilter roomFilter, Pageable pageable) {
-        Page<RoomDto> rooms = roomService.getRooms(roomFilter, pageable);
+    public ResponseEntity<List<RoomResponseDto>> getRooms(
+            @RequestBody RoomFilter roomFilter) {
+        List<RoomResponseDto> rooms = roomService.getRooms(roomFilter);
         return ResponseEntity.ok(rooms);
     }
 }

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Booking meeting rooms Application</title>
+</head>
+
+<body>
+
+<div th:insert="header.html"></div>
+
+<h1>Редактирование брони</h1>
+<form id="edit-form">
+    <div class="row">
+        <label for="room_name">Название переговорки:</label>
+        <select id="room_name" th:field="*{booking.roomId}">
+            <option th:each="room : ${rooms}"
+                    th:value="${room.id}"
+                    th:text="${room.roomName}"></option>
+        </select>
+    </div>
+
+    <div class="row">
+        <label for="booking_begin">Дата начала брони:</label>
+        <input id="booking_begin" name="beginDate" type="datetime-local"
+               th:field="${booking.beginDate}"/>
+    </div>
+
+
+    <div class="row">
+        <label for="booking_end">Дата окончания брони:</label>
+        <input id="booking_end" name="endDate" type="datetime-local"
+               th:field="${booking.endDate}"/>
+    </div>
+
+    <div class="row">
+        <button type="button" th:onclick="'javascript:saveb('+${booking.id}+')'">save and close</button>
+    </div>
+</form>
+
+<script>
+    function saveb(id) {
+        var roomId = document.getElementById("room_name").value;
+        var beginDate = document.getElementById("booking_begin").value;
+        var endDate = document.getElementById("booking_end").value;
+        var beginDateZ = new Date(beginDate);
+        beginDateZ.setTime( beginDateZ.getTime() - beginDateZ.getTimezoneOffset()*60*1000 );
+        var endDateZ = new Date(endDate);
+        endDateZ.setTime( endDateZ.getTime() - endDateZ.getTimezoneOffset()*60*1000 );
+        let type = 'POST';
+        let url = '/booking_meeting_rooms/api/bookings/';
+        if (id !== null) {
+            type = 'PUT';
+            url = url + id;
+        }
+        $.ajax({
+            type: type,
+            url: url,
+            data: JSON.stringify({
+                "roomId": roomId,
+                "beginDate": beginDateZ,
+                "endDate": endDateZ
+            }),
+            dataType: "json",
+            contentType: "application/json"
+        }).always(function () {
+            document.location.href = "/booking_meeting_rooms/bookings";
+        });
+    }
+</script>
+</body>
+</html>

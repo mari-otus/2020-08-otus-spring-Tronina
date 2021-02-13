@@ -25,7 +25,12 @@ integration:
     url: http://localhost:8083/booking_users
 
 app:
-  admin-email: ${admin.email}
+  email:
+    admin-email: ${admin.email}
+  sms:
+    twilio-account-sid: AC6a7e417f4346adb8eceee461c195b224
+    twilio-auth-token: d08fba56cb266a663e252536733618be
+    twilio-phone-number: '+19183022060'
 
 logging:
   level:

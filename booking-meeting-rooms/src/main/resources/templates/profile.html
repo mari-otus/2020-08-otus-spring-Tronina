@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Booking meeting rooms Application</title>
+</head>
+
+<body>
+
+<div th:insert="header.html"></div>
+
+<h1>Профиль</h1>
+<form id="edit-form">
+    <div class="row">
+        <label for="email">Email:</label>
+        <input id="email" name="email" type="text"/>
+    </div>
+    <div class="row">
+        <label for="mobilePhone">Номер сотового телефона:</label>
+        <input id="mobilePhone" name="mobilePhone" type="text"/>
+    </div>
+    <div class="row">
+        <label for="isEmailNotify">Отправлять уведомления на email:</label>
+        <input id="isEmailNotify" name="isEmailNotify" type="checkbox"/>
+    </div>
+    <div class="row">
+        <label for="isPhoneNotify">Отправлять уведомления по sms:</label>
+        <input id="isPhoneNotify" name="isPhoneNotify" type="checkbox"/>
+    </div>
+
+    <div class="row">
+        <button type="button" onclick="saveb()">save and close</button>
+    </div>
+</form>
+
+<script>
+    function saveb() {
+        $.ajax({
+            type: 'PUT',
+            url: "/booking_meeting_rooms/api/profiles",
+            data: JSON.stringify({
+                "email": $("#email").val(),
+                "mobilePhone": $("#mobilePhone").val(),
+                "emailNotify": $("#isEmailNotify").is(":checked"),
+                "phoneNotify": $("#isPhoneNotify").is(":checked")
+            }),
+            contentType: "application/json",
+            success: function () {
+                document.location.href = "/booking_meeting_rooms";
+            },
+            error: function (result) {
+                alert(result.responseJSON.message);
+            }
+        });
+    }
+
+    $(function () {
+        $.ajax({
+            type: 'GET',
+            url: "/booking_meeting_rooms/api/profiles",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (profile) {
+                $('#email').attr("value", `${profile.email}`);
+                $('#mobilePhone').attr("value", `${profile.mobilePhone}`);
+                if (profile.emailNotify) {
+                    $('#isEmailNotify').attr("checked", "checked");
+                }
+                if (profile.phoneNotify) {
+                    $('#isPhoneNotify').attr("checked", "checked");
+                }
+            },
+            error: function () {
+                $.ajax({
+                    type: 'POST',
+                    url: "/booking_meeting_rooms/api/profiles",
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function (profile) {
+                        $('#email').attr("value", `${profile.email}`);
+                        $('#mobilePhone').attr("value", `${profile.mobilePhone}`);
+                        if (profile.emailNotify) {
+                            $('#isEmailNotify').attr("checked", "checked");
+                        }
+                        if (profile.phoneNotify) {
+                            $('#isPhoneNotify').attr("checked", "checked");
+                        }
+                    }
+                });
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

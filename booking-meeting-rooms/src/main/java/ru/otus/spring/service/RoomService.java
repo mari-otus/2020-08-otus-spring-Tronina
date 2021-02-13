@@ -1,9 +1,10 @@
 package ru.otus.spring.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import ru.otus.spring.dto.RoomDto;
 import ru.otus.spring.dto.RoomFilter;
+import ru.otus.spring.dto.RoomResponseDto;
+
+import java.util.List;
 
 /**
  * @author MTronina
@@ -14,8 +15,10 @@ public interface RoomService {
 
     void updateRoom(Long roomId, RoomDto roomRequest);
 
-    void deleteRoom(Long roomId);
+    List<RoomResponseDto> deleteRoom(Long roomId);
 
-    Page<RoomDto> getRooms(RoomFilter roomFilter, Pageable pageable);
+    List<RoomResponseDto> getRooms(RoomFilter roomFilter);
+
+    RoomResponseDto getRoom(Long roomId);
 
 }

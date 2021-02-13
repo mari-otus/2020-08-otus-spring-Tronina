@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Booking meeting rooms Application</title>
+</head>
+
+<body>
+
+<div th:insert="header.html"></div>
+
+<h1>Список броней</h1>
+<table class="bookings" border="1">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>roomName</th>
+        <th>login</th>
+        <th>beginDate</th>
+        <th>endDate</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<td>
+    <a href="/booking_meeting_rooms/bookings/add">add</a>
+</td>
+<script>
+    function deleteb(id) {
+        $.ajax({
+            type: 'DELETE',
+            url: `/booking_meeting_rooms/api/bookings/${id}`,
+            data: id,
+            contentType: "application/json",
+            success: function (bookings) {
+                $('tbody').empty();
+                bookings.forEach(function (booking) {
+                    $('tbody').append(`
+                    <tr>
+                        <td>${booking.id}</td>
+                        <td>${booking.roomName}</td>
+                        <td>${booking.login}</td>
+                        <td>${new Date(booking.beginDate).toLocaleString("ru-RU")}</td>
+                        <td>${new Date(booking.endDate).toLocaleString("ru-RU")}</td>
+                        <td>
+                            <a href="/booking_meeting_rooms/bookings/${booking.id}">edit</a>
+                        </td>
+                        <td>
+                            <button type="button" onclick="deleteb(${booking.id})">delete</button>
+                        </td>
+                    </tr>
+                `)
+                });
+            }});
+    }
+
+    $(function () {
+        $.ajax({
+            type: 'POST',
+            url: "/booking_meeting_rooms/api/bookings/search",
+            data: JSON.stringify({}),
+            dataType: "json",
+            contentType: "application/json",
+            success: function (bookings) {
+                bookings.forEach(function (booking) {
+                    $('tbody').append(`
+                    <tr>
+                        <td>${booking.id}</td>
+                        <td>${booking.roomName}</td>
+                        <td>${booking.login}</td>
+                        <td>${new Date(booking.beginDate).toLocaleString("ru-RU")}</td>
+                        <td>${new Date(booking.endDate).toLocaleString("ru-RU")}</td>
+                        <td>
+                            <a href="/booking_meeting_rooms/bookings/${booking.id}">edit</a>
+                        </td>
+                        <td>
+                            <button type="button" onclick="deleteb(${booking.id})">delete</button>
+                        </td>
+                    </tr>
+                `)
+                });
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

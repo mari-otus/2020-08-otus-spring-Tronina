@@ -3,7 +3,10 @@ package ru.otus.spring.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -11,7 +14,10 @@ import javax.validation.constraints.NotNull;
 /**
  * @author MTronina
  */
+@Builder
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel(value = "Room.Filter", description = "Фильтр поиска переговорных комнат")
 public class RoomFilter {
@@ -29,5 +35,8 @@ public class RoomFilter {
 
     @ApiModelProperty(value = "Наличие кондиционера")
     private Boolean hasVideoconference;
+
+    @ApiModelProperty(value = "Наличие подписки")
+    private boolean hasSubscribe;
 
 }

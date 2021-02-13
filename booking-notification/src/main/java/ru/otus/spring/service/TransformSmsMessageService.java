@@ -1,7 +1,9 @@
 package ru.otus.spring.service;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.MessageCreator;
+import com.twilio.type.PhoneNumber;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import ru.otus.spring.config.NotificationProperties;
 import ru.otus.spring.model.BookingNotify;
@@ -17,31 +19,30 @@ import java.util.Locale;
  */
 @Service
 @RequiredArgsConstructor
-public class TransformMailMessageService implements TransformMessageService<SimpleMailMessage> {
+public class TransformSmsMessageService implements TransformMessageService<MessageCreator> {
 
     private final NotificationProperties notificationProperties;
 
     @Override
-    public SimpleMailMessage[] transform(BookingNotify bookingNotify) {
+    public MessageCreator[] transform(BookingNotify bookingNotify) {
+        Twilio.init(notificationProperties.getSms().getTwilioAccountSid(), notificationProperties.getSms().getTwilioAuthToken());
+
         return bookingNotify.getSubscribers().stream()
-                .filter(Subscriber::isEmailNotify)
+                .filter(Subscriber::isPhoneNotify)
                 .map(profileUserDto -> {
-                    final SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-                    simpleMailMessage.setTo(profileUserDto.getEmail());
-                    simpleMailMessage.setFrom(notificationProperties.getEmail().getAdminEmail());
+                    MessageCreator message = new MessageCreator(new PhoneNumber(profileUserDto.getMobilePhone()),
+                            new PhoneNumber(notificationProperties.getSms().getTwilioPhoneNumber()),
+                            "");
                     if (bookingNotify.getDeleteBookingDate() != null) {
-                        simpleMailMessage.setSubject(MessageFormat.format("Уведомление. Удалена бронь на переговорку \"{0}\"", bookingNotify.getRoomName()));
-                        simpleMailMessage.setText(textDelete(bookingNotify, profileUserDto));
+                        message.setBody(textDelete(bookingNotify, profileUserDto));
                     } else if (bookingNotify.getUpdateBookingDate() != null) {
-                        simpleMailMessage.setSubject(MessageFormat.format("Уведомление. Изменена бронь на переговорку \"{0}\"", bookingNotify.getRoomName()));
-                        simpleMailMessage.setText(textUpdate(bookingNotify, profileUserDto));
+                        message.setBody(textUpdate(bookingNotify, profileUserDto));
                     } else {
-                        simpleMailMessage.setSubject(MessageFormat.format("Уведомление. Создана бронь на переговорку \"{0}\"", bookingNotify.getRoomName()));
-                        simpleMailMessage.setText(textCreate(bookingNotify, profileUserDto));
+                        message.setBody(textCreate(bookingNotify, profileUserDto));
                     }
-                    return simpleMailMessage;
+                    return message;
                 })
-                .toArray(SimpleMailMessage[]::new);
+                .toArray(MessageCreator[]::new);
     }
 
     private String textCreate(BookingNotify message, Subscriber subscriber) {

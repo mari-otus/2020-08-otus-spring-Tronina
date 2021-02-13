@@ -13,8 +13,8 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@ApiModel(value = "Room.Request", description = "Запрос на создание переговорной комнаты")
-public class RoomDto {
+@ApiModel(value = "Room.Response", description = "Ответ на получение переговорной комнаты")
+public class RoomResponseDto {
 
     @NotNull
     private Long id;
@@ -32,5 +32,8 @@ public class RoomDto {
 
     @ApiModelProperty(value = "Наличие кондиционера")
     private boolean hasVideoconference;
+
+    @ApiModelProperty(value = "Наличие подписки")
+    private boolean hasSubscribe;
 
 }
