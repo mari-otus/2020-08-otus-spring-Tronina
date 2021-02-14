@@ -66,6 +66,44 @@ public class BookingCustomRepositoryImpl implements BookingCustomRepository {
     }
 
     @Override
+    public List<Booking> findAllExistsActiveByFilter(Long id, String roomName, LocalDateTime beginDate, LocalDateTime endDate) {
+        Query query = em.createQuery("select b from Booking b " +
+                        "where b.deleteDate is null " +
+                        (id != null ? "and b.id != :id " : "") +
+                        (roomName != null ? "and b.room.roomName = :roomName " : "") +
+                        (beginDate != null && endDate != null
+                         ? "and ((function('to_char', b.beginDate, 'YYYY-mm-dd HH24:MI')  <= :beginDate " +
+                                 "and function('to_char', b.endDate, 'YYYY-mm-dd HH24:MI') >= :beginDate) " +
+                                 "or (function('to_char', b.beginDate, 'YYYY-mm-dd HH24:MI') <= :endDate " +
+                                 "and function('to_char', b.endDate, 'YYYY-mm-dd HH24:MI') >= :endDate) ) "
+                         : "") +
+                        (beginDate != null && endDate == null
+                         ? "and (function('to_char', b.beginDate, 'YYYY-mm-dd HH24:MI') <= :beginDate " +
+                                 "and function('to_char', b.endDate, 'YYYY-mm-dd HH24:MI') >= :beginDate) "
+                         : "") +
+                        (beginDate == null && endDate != null
+                         ? "and (function('to_char', b.beginDate, 'YYYY-mm-dd HH24:MI') <= :endDate " +
+                                 "and function('to_char', b.endDate, 'YYYY-mm-dd HH24:MI') >= :endDate) "
+                         : ""),
+                Booking.class);
+        if (id != null) {
+            query.setParameter("id", id);
+        }
+        if (roomName != null) {
+            query.setParameter("roomName", roomName);
+        }
+        if (beginDate != null) {
+            query.setParameter("beginDate", beginDate.format(
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        }
+        if (endDate != null) {
+            query.setParameter("endDate", endDate.format(
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        }
+        return query.getResultList();
+    }
+
+    @Override
     public void updateCompleteBookings() {
         Query query = em.createQuery("update Booking b set b.deleteDate = :deleteDate " +
                 "where b.deleteDate is null " +
@@ -74,4 +112,5 @@ public class BookingCustomRepositoryImpl implements BookingCustomRepository {
         query.setParameter("currentDate", LocalDateTime.now());
         query.executeUpdate();
     }
+
 }

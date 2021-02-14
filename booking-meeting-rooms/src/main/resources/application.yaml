@@ -60,7 +60,6 @@ app:
     enabled: true
     complete-bookings-cron-expression: "0 0/1 * * * *"    #Every day
     notify-bookings-cron-expression: "0 0/1 * * * *"    #Every day
-    notify-minutes: 10
 
 logging:
   level:

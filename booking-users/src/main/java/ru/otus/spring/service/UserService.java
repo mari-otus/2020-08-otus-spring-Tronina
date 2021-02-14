@@ -2,7 +2,9 @@ package ru.otus.spring.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import ru.otus.spring.dto.UserCreateDto;
 import ru.otus.spring.dto.UserDto;
+import ru.otus.spring.dto.UserUpdateDto;
 
 /**
  * @author MTronina
@@ -11,7 +13,7 @@ public interface UserService {
 
     Page<UserDto> getUsers(Pageable pageable);
 
-    UserDto createUser(UserDto user);
+    UserDto createUser(UserCreateDto user);
 
     void lockUser(Long userId);
 
@@ -21,7 +23,7 @@ public interface UserService {
 
     void disableUser(Long userId);
 
-    void editUser(UserDto user);
+    void editUser(UserUpdateDto user);
 
     UserDto getUserByLogin(String login);
 }

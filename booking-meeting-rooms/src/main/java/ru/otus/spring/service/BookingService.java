@@ -1,6 +1,7 @@
 package ru.otus.spring.service;
 
-import ru.otus.spring.dto.BookingDto;
+import ru.otus.spring.dto.BookingRequestDto;
+import ru.otus.spring.dto.BookingResponseDto;
 import ru.otus.spring.dto.BookingFilter;
 import ru.otus.spring.security.AuthUserDetails;
 
@@ -11,17 +12,17 @@ import java.util.List;
  */
 public interface BookingService {
 
-    void createBooking(BookingDto bookingRequest, AuthUserDetails authUserDetails);
+    void createBooking(BookingRequestDto bookingRequest, AuthUserDetails authUserDetails);
 
-    void updateBooking(Long bookingId, BookingDto bookingRequest, AuthUserDetails authUserDetails);
+    void updateBooking(Long bookingId, BookingRequestDto bookingRequest, AuthUserDetails authUserDetails);
 
-    List<BookingDto> deleteBooking(Long bookingId, AuthUserDetails authUserDetails);
+    List<BookingResponseDto> deleteBooking(Long bookingId, AuthUserDetails authUserDetails);
 
-    List<BookingDto> getBookings(BookingFilter bookingFilter);
+    List<BookingResponseDto> getBookings(BookingFilter bookingFilter);
 
-    BookingDto getBooking(Long bookingId);
+    BookingResponseDto getBooking(Long bookingId);
 
     void completedBookings();
 
-    List<BookingDto> getSoonStartingBookings(int minutes);
+    List<BookingResponseDto> getSoonStartingBookings(long minutes);
 }

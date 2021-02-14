@@ -21,25 +21,25 @@ import ru.otus.spring.domain.Booking;
 public class NotifyHibernateEventListener implements PostInsertEventListener, PostUpdateEventListener,
         PostDeleteEventListener {
 
-    private final NotifyManager notifyManager;
+    private final NotificationManager notificationManager;
 
     @Override
     public void onPostInsert(PostInsertEvent event) {
         if (event.getEntity() instanceof Booking) {
-            notifyManager.notifyEvent((Booking) event.getEntity());
+            notificationManager.notifyEvent((Booking) event.getEntity());
         }
     }
 
     @Override
     public void onPostUpdate(PostUpdateEvent event) {
         if (event.getEntity() instanceof Booking) {
-            notifyManager.notifyEvent((Booking) event.getEntity());
+            notificationManager.notifyEvent((Booking) event.getEntity());
         }
     }
 
     @Override
     public void onPostDelete(PostDeleteEvent event) {
-        notifyManager.notifyEvent((Booking) event.getEntity());
+        notificationManager.notifyEvent((Booking) event.getEntity());
     }
 
     @Override

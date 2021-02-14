@@ -15,9 +15,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookingNotify {
+public class BookingNotificationEvent {
 
-    private List<ProfileUserDto> subscribers;
+    private List<SubscriberDto> subscribers;
 
     private String roomName;
 

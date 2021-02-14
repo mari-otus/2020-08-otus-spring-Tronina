@@ -6,20 +6,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import ru.otus.spring.dto.BookingDto;
-import ru.otus.spring.dto.RoomDto;
+import ru.otus.spring.dto.BookingRequestDto;
 import ru.otus.spring.dto.RoomFilter;
+import ru.otus.spring.dto.RoomRequestDto;
 import ru.otus.spring.service.BookingService;
 import ru.otus.spring.service.RoomService;
 
 /**
- * Контроллер для работы с книгами.
+ * Контроллер для работы с UI.
  *
  * @author Mariya Tronina
  */
 @RequiredArgsConstructor
 @Controller
-public class HomeController {
+public class UIController {
 
     private final BookingService bookingService;
     private final RoomService roomService;
@@ -30,8 +30,8 @@ public class HomeController {
      * @return view name.
      */
     @GetMapping("/")
-    public String index() {
-        return "index";
+    public String home() {
+        return "home";
     }
 
     @GetMapping("/bookings/{id}")
@@ -43,14 +43,14 @@ public class HomeController {
 
     @GetMapping("/bookings/add")
     public String addBook(Model model) {
-        model.addAttribute("booking", new BookingDto());
+        model.addAttribute("booking", new BookingRequestDto());
         model.addAttribute("rooms", roomService.getRooms(RoomFilter.builder().build()));
         return "editBooking";
     }
 
     @GetMapping("/bookings/add/{roomId}")
     public String addBook(@PathVariable("roomId") long roomId, Model model) {
-        model.addAttribute("booking", BookingDto.builder()
+        model.addAttribute("booking", BookingRequestDto.builder()
                 .roomId(roomId)
                 .build());
         model.addAttribute("rooms", roomService.getRooms(RoomFilter.builder().build()));
@@ -68,7 +68,7 @@ public class HomeController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/rooms/add")
     public String addRoom(Model model) {
-        model.addAttribute("room", new RoomDto());
+        model.addAttribute("room", new RoomRequestDto());
         return "editRoom";
     }
 
@@ -85,6 +85,11 @@ public class HomeController {
     @GetMapping("/profiles")
     public String getProfile() {
         return "profile";
+    }
+
+    @GetMapping("/index")
+    public String index() {
+        return "index";
     }
 
 }

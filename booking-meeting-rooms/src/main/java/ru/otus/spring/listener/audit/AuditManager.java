@@ -1,6 +1,7 @@
 package ru.otus.spring.listener.audit;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 /**
  * @author MTronina
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 @ConditionalOnProperty(name = "app.audit.enabled", havingValue = "true")
@@ -26,28 +28,32 @@ public class AuditManager {
     private final BookingAuditRepository bookingAuditRepository;
 
     public void insertAuditEntry(Booking booking) {
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
-        AuthUserDetails userDetails = (AuthUserDetails) authenticationToken.getPrincipal();
+        try {
+            Principal principal = SecurityContextHolder.getContext().getAuthentication();
+            UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
+            AuthUserDetails userDetails = (AuthUserDetails) authenticationToken.getPrincipal();
 
-        BookingAudit bookingAudit = BookingAudit.builder()
-                .bookingId(booking.getId())
-                .room(booking.getRoom())
-                .beginDate(booking.getBeginDate())
-                .endDate(booking.getEndDate())
-                .createDate(booking.getCreateDate())
-                .updateDate(booking.getUpdateDate())
-                .deleteDate(booking.getDeleteDate())
-                .user(UserDto.builder()
-                        .fio(userDetails.getFio())
-                        .login(userDetails.getUsername())
-                        .roles(userDetails.getAuthorities().stream()
-                                .map(authority -> UserRoleDto.builder()
-                                        .role(authority.getAuthority())
-                                        .build())
-                                .collect(Collectors.toSet()))
-                        .build())
-                .build();
-        bookingAuditRepository.save(bookingAudit);
+            BookingAudit bookingAudit = BookingAudit.builder()
+                    .bookingId(booking.getId())
+                    .room(booking.getRoom())
+                    .beginDate(booking.getBeginDate())
+                    .endDate(booking.getEndDate())
+                    .createDate(booking.getCreateDate())
+                    .updateDate(booking.getUpdateDate())
+                    .deleteDate(booking.getDeleteDate())
+                    .user(UserDto.builder()
+                            .fio(userDetails.getFio())
+                            .login(userDetails.getUsername())
+                            .roles(userDetails.getAuthorities().stream()
+                                    .map(authority -> UserRoleDto.builder()
+                                            .role(authority.getAuthority())
+                                            .build())
+                                    .collect(Collectors.toSet()))
+                            .build())
+                    .build();
+            bookingAuditRepository.save(bookingAudit);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
     }
 }

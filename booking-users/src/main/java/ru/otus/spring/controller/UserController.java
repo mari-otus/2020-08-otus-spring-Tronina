@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import ru.otus.spring.dto.UserCreateDto;
 import ru.otus.spring.dto.UserDto;
+import ru.otus.spring.dto.UserUpdateDto;
 import ru.otus.spring.security.AuthUserDetails;
 import ru.otus.spring.service.UserService;
 
@@ -42,14 +44,14 @@ public class UserController {
 
     @PostMapping("/users")
     public ResponseEntity<UserDto> createUser(
-            @RequestBody UserDto userDto) {
+            @RequestBody UserCreateDto userDto) {
         UserDto userNew = userService.createUser(userDto);
         return ResponseEntity.ok(userNew);
     }
 
     @PutMapping("/users")
     public ResponseEntity<UserDto> editUser(
-            @RequestBody UserDto userDto) {
+            @RequestBody UserUpdateDto userDto) {
         userService.editUser(userDto);
         return ResponseEntity.ok().build();
     }

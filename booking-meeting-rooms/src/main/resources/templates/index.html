@@ -5,8 +5,10 @@
     <title>Booking meeting rooms Application</title>
 </head>
 <body>
-<h1>Бронирование переговорных комнат</h1>
-<h2>Главная страница</h2>
+
+<div th:insert="header.html"></div>
+
+<h2>Меню</h2>
 <a th:href="@{bookings}">Список броней</a>
 <br>
 <a th:href="@{rooms}">Переговорки</a>

@@ -14,10 +14,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel(value = "Room.Request", description = "Запрос на создание переговорной комнаты")
-public class RoomDto {
-
-    @NotNull
-    private Long id;
+public class RoomRequestDto {
 
     @NotBlank
     @ApiModelProperty(value = "Название переговорной комнаты", required = true)

@@ -36,6 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers("/swagger-ui.html/**").authenticated()
                 .and()
+                .authorizeRequests().antMatchers("/index/**").authenticated()
+                .and()
                 .authorizeRequests().antMatchers("/bookings/**").authenticated()
                 .and()
                 .authorizeRequests().antMatchers("/rooms/**").authenticated()

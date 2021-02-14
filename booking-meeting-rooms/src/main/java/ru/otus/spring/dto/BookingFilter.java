@@ -28,6 +28,9 @@ public class BookingFilter {
     private Period endBooking;
 
     @Data
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Period {
 

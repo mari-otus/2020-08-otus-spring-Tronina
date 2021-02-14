@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class BookingNotificationReminder {
 
-    private ProfileUserDto subscriber;
+    private SubscriberDto subscriber;
 
     private String roomName;
 

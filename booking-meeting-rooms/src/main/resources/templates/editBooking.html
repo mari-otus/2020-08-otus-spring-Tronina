@@ -61,10 +61,13 @@
                 "beginDate": beginDateZ,
                 "endDate": endDateZ
             }),
-            dataType: "json",
-            contentType: "application/json"
-        }).always(function () {
-            document.location.href = "/booking_meeting_rooms/bookings";
+            contentType: "application/json",
+            success: function () {
+                document.location.href = "/booking_meeting_rooms/bookings";
+            },
+            error: function (result) {
+                alert(result.responseJSON.message);
+            }
         });
     }
 </script>

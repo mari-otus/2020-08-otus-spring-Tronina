@@ -16,9 +16,16 @@ import ru.otus.spring.dto.ApplicationError;
 public class HandlerException extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<ApplicationError> exception(final Throwable throwable) {
+    public ResponseEntity<ApplicationError> exceptionAccessDenied(final Throwable throwable) {
         String errorMessage = (throwable != null ? throwable.getMessage() : "Unknown error");
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(new ApplicationError(errorMessage));
+    }
+
+    @ExceptionHandler(ApplicationException.class)
+    public ResponseEntity<ApplicationError> exceptionApplication(final Throwable throwable) {
+        String errorMessage = (throwable != null ? throwable.getMessage() : "Unknown error");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ApplicationError(errorMessage));
     }
 

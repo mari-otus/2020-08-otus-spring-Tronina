@@ -47,7 +47,7 @@ public class TransformMailMessageService implements TransformMessageService<Simp
         final SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(message.getSubscriber().getEmail());
         simpleMailMessage.setFrom(notificationProperties.getEmail().getAdminEmail());
-        simpleMailMessage.setSubject(MessageFormat.format("Уведомление. Скоро начнется Ваша бронь на переговорку \"{0}\"", message.getRoomName()));
+        simpleMailMessage.setSubject(MessageFormat.format("Напоминание. Скоро начнется Ваша бронь на переговорку \"{0}\"", message.getRoomName()));
         simpleMailMessage.setText(MessageUtils.textReminder(message));
         return simpleMailMessage;
     }

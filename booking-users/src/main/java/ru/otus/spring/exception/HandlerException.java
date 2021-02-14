@@ -22,4 +22,18 @@ public class HandlerException extends ResponseEntityExceptionHandler {
                 .body(new ApplicationError(errorMessage));
     }
 
+    @ExceptionHandler({UserNotFoundException.class,
+                       RoleNotFoundException.class})
+    public ResponseEntity<ApplicationError> exceptionNotFoundException(final Throwable throwable) {
+        String errorMessage = (throwable != null ? throwable.getMessage() : "Unknown error");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ApplicationError(errorMessage));
+    }
+
+    @ExceptionHandler(ApplicationException.class)
+    public ResponseEntity<ApplicationError> exceptionApplication(final Throwable throwable) {
+        String errorMessage = (throwable != null ? throwable.getMessage() : "Unknown error");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApplicationError(errorMessage));
+    }
 }

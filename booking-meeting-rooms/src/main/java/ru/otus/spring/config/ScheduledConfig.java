@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import ru.otus.spring.listener.notification.NotifyManager;
+import ru.otus.spring.listener.notification.NotificationManager;
 import ru.otus.spring.service.BookingService;
 import ru.otus.spring.sheduled.SchedulerCompleted;
 import ru.otus.spring.sheduled.SchedulerNotify;
@@ -25,8 +25,8 @@ public class ScheduledConfig {
     @Bean
     @ConditionalOnProperty(name = "app.notify.enabled", havingValue = "true")
     public SchedulerNotify schedulerNotify(BookingService bookingService,
-                                           NotifyManager notifyManager) {
-        return new SchedulerNotify(bookingService, notifyManager);
+                                           NotificationManager notificationManager) {
+        return new SchedulerNotify(bookingService, notificationManager);
     }
 
     @Bean

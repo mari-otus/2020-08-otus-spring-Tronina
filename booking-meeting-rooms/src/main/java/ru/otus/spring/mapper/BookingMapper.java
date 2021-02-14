@@ -5,9 +5,9 @@ import org.mapstruct.Mapping;
 import ru.otus.spring.domain.Booking;
 import ru.otus.spring.domain.Profile;
 import ru.otus.spring.domain.Room;
-import ru.otus.spring.dto.BookingDto;
+import ru.otus.spring.dto.BookingResponseDto;
 import ru.otus.spring.dto.ProfileDto;
-import ru.otus.spring.dto.RoomDto;
+import ru.otus.spring.dto.RoomRequestDto;
 import ru.otus.spring.dto.RoomResponseDto;
 
 /**
@@ -16,8 +16,9 @@ import ru.otus.spring.dto.RoomResponseDto;
 @Mapper
 public interface BookingMapper {
 
+    @Mapping(source = "emailNotify", target = "isEmailNotify")
+    @Mapping(source = "phoneNotify", target = "isPhoneNotify")
     ProfileDto toProfileDto(Profile profile);
-
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "room.id", target = "roomId")
@@ -25,11 +26,9 @@ public interface BookingMapper {
     @Mapping(source = "login", target = "login")
     @Mapping(source = "beginDate", target = "beginDate")
     @Mapping(source = "endDate", target = "endDate")
-    BookingDto toBookingDto(Booking booking);
+    BookingResponseDto toBookingDto(Booking booking);
 
-    Room toRoom(RoomDto roomDto);
-
-    RoomDto toRoomDto(Room room);
+    Room toRoom(RoomRequestDto roomDto);
 
     RoomResponseDto toRoomResponseDto(Room room);
 }

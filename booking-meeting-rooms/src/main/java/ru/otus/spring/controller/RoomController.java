@@ -10,11 +10,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.otus.spring.dto.RoomDto;
 import ru.otus.spring.dto.RoomFilter;
+import ru.otus.spring.dto.RoomRequestDto;
 import ru.otus.spring.dto.RoomResponseDto;
 import ru.otus.spring.service.RoomService;
-import ru.otus.spring.service.SubscribingService;
 
 import java.util.List;
 
@@ -28,11 +27,10 @@ import java.util.List;
 public class RoomController {
 
     private final RoomService roomService;
-    private final SubscribingService subscribingService;
 
     @PostMapping("/rooms")
     public ResponseEntity<Void> createRoom(
-            @RequestBody RoomDto room) {
+            @RequestBody RoomRequestDto room) {
         roomService.createRoom(room);
         return ResponseEntity.ok().build();
     }
@@ -40,7 +38,7 @@ public class RoomController {
     @PutMapping("/rooms/{roomId}")
     public ResponseEntity<Void> editRoom(
             @PathVariable Long roomId,
-            @RequestBody RoomDto room) {
+            @RequestBody RoomRequestDto room) {
         roomService.updateRoom(roomId, room);
         return ResponseEntity.ok().build();
     }

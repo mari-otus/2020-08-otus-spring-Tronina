@@ -15,15 +15,11 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookingDto {
+public class BookingRequestDto {
 
     private Long id;
 
     private Long roomId;
-
-    private String roomName;
-
-    private String login;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime beginDate;

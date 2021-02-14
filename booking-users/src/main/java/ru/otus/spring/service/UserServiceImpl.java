@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.domain.User;
 import ru.otus.spring.domain.UserRole;
+import ru.otus.spring.dto.UserCreateDto;
 import ru.otus.spring.dto.UserDto;
-import ru.otus.spring.exception.ApplicationException;
+import ru.otus.spring.dto.UserUpdateDto;
+import ru.otus.spring.exception.RoleNotFoundException;
+import ru.otus.spring.exception.UserNotFoundException;
 import ru.otus.spring.mapper.UserMapper;
 import ru.otus.spring.repository.user.RoleRepository;
 import ru.otus.spring.repository.user.UserRepository;
@@ -39,11 +42,11 @@ public class UserServiceImpl implements UserService {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Transactional
     @Override
-    public UserDto createUser(UserDto userDto) {
+    public UserDto createUser(UserCreateDto userDto) {
         User user = mapper.toUser(userDto);
         user.setPassword(passwordEncoder.encode("guest"));
         UserRole userRole = roleRepository.findByRole("ROLE_USER")
-                .orElseThrow(ApplicationException::new);
+                .orElseThrow(() -> new RoleNotFoundException("ROLE_USER"));
         user.setRoles(Set.of(userRole));
         User userNew = userRepository.save(user);
         return mapper.toUserDto(userNew);
@@ -54,7 +57,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void lockUser(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(ApplicationException::new);
+                .orElseThrow(() -> new UserNotFoundException(userId));
         user.setLocked(true);
         userRepository.save(user);
     }
@@ -64,7 +67,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void unlockUser(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(ApplicationException::new);
+                .orElseThrow(() -> new UserNotFoundException(userId));
         user.setLocked(false);
         userRepository.save(user);
     }
@@ -74,7 +77,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void enableUser(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(ApplicationException::new);
+                .orElseThrow(() -> new UserNotFoundException(userId));
         user.setEnabled(true);
         userRepository.save(user);
     }
@@ -84,7 +87,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void disableUser(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(ApplicationException::new);
+                .orElseThrow(() -> new UserNotFoundException(userId));
         user.setEnabled(false);
         userRepository.save(user);
     }
@@ -92,9 +95,9 @@ public class UserServiceImpl implements UserService {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Transactional
     @Override
-    public void editUser(UserDto user) {
+    public void editUser(UserUpdateDto user) {
         User userOld = userRepository.findById(user.getId())
-                .orElseThrow(ApplicationException::new);
+                .orElseThrow(() -> new UserNotFoundException(user.getId()));
         userOld.setFio(user.getFio());
         userOld.setLogin(user.getLogin());
         userRepository.save(userOld);
@@ -104,7 +107,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserByLogin(String login) {
         User user = userRepository.findByLogin(login)
-                .orElseThrow(ApplicationException::new);
+                .orElseThrow(() -> new UserNotFoundException(login));
         final UserDto userDto = mapper.toUserDto(user);
         userDto.setPassword(user.getPassword());
         return userDto;

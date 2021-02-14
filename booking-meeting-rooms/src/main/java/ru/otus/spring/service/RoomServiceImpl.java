@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.domain.Booking;
 import ru.otus.spring.domain.Room;
 import ru.otus.spring.domain.Subscribing;
-import ru.otus.spring.dto.RoomDto;
 import ru.otus.spring.dto.RoomFilter;
+import ru.otus.spring.dto.RoomRequestDto;
 import ru.otus.spring.dto.RoomResponseDto;
 import ru.otus.spring.exception.ApplicationException;
 import ru.otus.spring.mapper.BookingMapper;
@@ -35,7 +35,7 @@ public class RoomServiceImpl implements RoomService {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Transactional
     @Override
-    public void createRoom(RoomDto roomRequest) {
+    public void createRoom(RoomRequestDto roomRequest) {
         Room room = mapper.toRoom(roomRequest);
         roomRepository.save(room);
     }
@@ -43,7 +43,7 @@ public class RoomServiceImpl implements RoomService {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Transactional
     @Override
-    public void updateRoom(Long roomId, RoomDto roomRequest) {
+    public void updateRoom(Long roomId, RoomRequestDto roomRequest) {
         Room room = roomRepository.findById(roomId)
                 .orElseThrow(ApplicationException::new);
         if (roomRequest.getCapacity() != null) {

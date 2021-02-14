@@ -28,7 +28,7 @@ public class MessageUtils {
 
     public String textCreate(BookingNotify message, Subscriber subscriber) {
         return MessageFormat
-                .format("{0}, {1} была забронирована переговорка \"{2}\" на период с {3} по {4}. \r\n" +
+                .format("Уважаемый {0}, {1} была забронирована переговорка \"{2}\" на период с {3} по {4}. \r\n" +
                                 "Автор брони {5}.",
                         subscriber.getFio(),
                         message.getCreateBookingDate().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
@@ -44,7 +44,7 @@ public class MessageUtils {
 
     public String textUpdate(BookingNotify message, Subscriber subscriber) {
         return MessageFormat
-                .format("{0}, {1} была изменена бронь переговорки \"{2}\". \r\n" +
+                .format("Уважаемый {0}, {1} была изменена бронь переговорки \"{2}\". \r\n" +
                                 "Период брони с {3} по {4}. \r\n" +
                                 "Автор изменений {5}.",
                         subscriber.getFio(),
@@ -61,7 +61,7 @@ public class MessageUtils {
 
     public String textDelete(BookingNotify message, Subscriber subscriber) {
         return MessageFormat
-                .format("{0}, {1} была удалена бронь с переговорки \"{2}\" с {3} по {4}. \r\n" +
+                .format("Уважаемый {0}, {1} была удалена бронь с переговорки \"{2}\" с {3} по {4}. \r\n" +
                                 "Автор изменений {5}.",
                         subscriber.getFio(),
                         message.getDeleteBookingDate().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)

@@ -60,10 +60,13 @@
                 "hasVideoconference": hasVideoconference,
                 "hasConditioner": hasConditioner
             }),
-            dataType: "json",
-            contentType: "application/json"
-        }).always(function () {
-            document.location.href = "/booking_meeting_rooms/rooms";
+            contentType: "application/json",
+            success: function () {
+                document.location.href = "/booking_meeting_rooms/rooms";
+            },
+            error: function (result) {
+                alert(result.responseJSON.message);
+            }
         });
     }
 </script>

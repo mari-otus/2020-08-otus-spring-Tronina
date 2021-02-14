@@ -1,7 +1,7 @@
 package ru.otus.spring.service;
 
-import ru.otus.spring.dto.RoomDto;
 import ru.otus.spring.dto.RoomFilter;
+import ru.otus.spring.dto.RoomRequestDto;
 import ru.otus.spring.dto.RoomResponseDto;
 
 import java.util.List;
@@ -11,9 +11,9 @@ import java.util.List;
  */
 public interface RoomService {
 
-    void createRoom(RoomDto roomRequest);
+    void createRoom(RoomRequestDto roomRequest);
 
-    void updateRoom(Long roomId, RoomDto roomRequest);
+    void updateRoom(Long roomId, RoomRequestDto roomRequest);
 
     List<RoomResponseDto> deleteRoom(Long roomId);
 

@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 /**
  * @author MTronina
  */
-@Builder
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProfileUserDto {
+public class SubscriberDto {
 
     private String fio;
 

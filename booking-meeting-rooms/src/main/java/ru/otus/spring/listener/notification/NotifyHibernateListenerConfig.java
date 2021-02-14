@@ -34,7 +34,5 @@ public class NotifyHibernateListenerConfig {
                 .appendListeners(notifyHibernateEventListener);
         eventListenerRegistry.getEventListenerGroup(EventType.POST_UPDATE)
                 .appendListeners(notifyHibernateEventListener);
-        eventListenerRegistry.getEventListenerGroup(EventType.POST_DELETE)
-                .appendListeners(notifyHibernateEventListener);
     }
 }

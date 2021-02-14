@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.otus.spring.dto.BookingDto;
+import ru.otus.spring.dto.BookingRequestDto;
+import ru.otus.spring.dto.BookingResponseDto;
 import ru.otus.spring.dto.BookingFilter;
 import ru.otus.spring.security.AuthUserDetails;
 import ru.otus.spring.service.BookingService;
@@ -33,7 +34,7 @@ public class BookingController {
 
     @PostMapping("/bookings")
     public ResponseEntity<Void> createBookingRoom(
-            @RequestBody BookingDto booking, Principal principal) {
+            @RequestBody BookingRequestDto booking, Principal principal) {
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
         AuthUserDetails userDetails = (AuthUserDetails) authenticationToken.getPrincipal();
         bookingService.createBooking(booking, userDetails);
@@ -41,8 +42,7 @@ public class BookingController {
     }
 
     @GetMapping("/bookings/{bookingId}")
-    public ResponseEntity<Void> getBookingRoom(
-            @PathVariable Long bookingId) {
+    public ResponseEntity<Void> getBookingRoom(@PathVariable Long bookingId) {
         bookingService.getBooking(bookingId);
         return ResponseEntity.ok().build();
     }
@@ -50,7 +50,7 @@ public class BookingController {
     @PutMapping("/bookings/{bookingId}")
     public ResponseEntity<Void> editBookingRoom(
             @PathVariable Long bookingId,
-            @RequestBody BookingDto booking,
+            @RequestBody BookingRequestDto booking,
             Principal principal) {
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
         AuthUserDetails userDetails = (AuthUserDetails) authenticationToken.getPrincipal();
@@ -59,19 +59,19 @@ public class BookingController {
     }
 
     @DeleteMapping("/bookings/{bookingId}")
-    public ResponseEntity<List<BookingDto>> deleteBookingRoom(
+    public ResponseEntity<List<BookingResponseDto>> deleteBookingRoom(
             @PathVariable Long bookingId,
             Principal principal) {
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
         AuthUserDetails userDetails = (AuthUserDetails) authenticationToken.getPrincipal();
-        List<BookingDto> bookings = bookingService.deleteBooking(bookingId, userDetails);
+        List<BookingResponseDto> bookings = bookingService.deleteBooking(bookingId, userDetails);
         return ResponseEntity.ok(bookings);
     }
 
     @PostMapping("/bookings/search")
-    public ResponseEntity<List<BookingDto>> getBookings(
+    public ResponseEntity<List<BookingResponseDto>> getBookings(
             @RequestBody BookingFilter bookingFilter) {
-        List<BookingDto> bookings = bookingService.getBookings(bookingFilter);
+        List<BookingResponseDto> bookings = bookingService.getBookings(bookingFilter);
         return ResponseEntity.ok(bookings);
     }
 }
