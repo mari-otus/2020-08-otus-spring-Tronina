@@ -6,13 +6,9 @@ import com.twilio.type.PhoneNumber;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.otus.spring.config.NotificationProperties;
+import ru.otus.spring.model.BookingNotificationReminder;
 import ru.otus.spring.model.BookingNotify;
 import ru.otus.spring.model.Subscriber;
-
-import java.text.MessageFormat;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.util.Locale;
 
 /**
  * @author MTronina
@@ -34,63 +30,25 @@ public class TransformSmsMessageService implements TransformMessageService<Messa
                             new PhoneNumber(notificationProperties.getSms().getTwilioPhoneNumber()),
                             "");
                     if (bookingNotify.getDeleteBookingDate() != null) {
-                        message.setBody(textDelete(bookingNotify, profileUserDto));
+                        message.setBody(MessageUtils.textDelete(bookingNotify, profileUserDto));
                     } else if (bookingNotify.getUpdateBookingDate() != null) {
-                        message.setBody(textUpdate(bookingNotify, profileUserDto));
+                        message.setBody(MessageUtils.textUpdate(bookingNotify, profileUserDto));
                     } else {
-                        message.setBody(textCreate(bookingNotify, profileUserDto));
+                        message.setBody(MessageUtils.textCreate(bookingNotify, profileUserDto));
                     }
                     return message;
                 })
                 .toArray(MessageCreator[]::new);
     }
 
-    private String textCreate(BookingNotify message, Subscriber subscriber) {
-        return MessageFormat
-                .format("{0}, {1} была забронирована переговорка \"{2}\" на период с {3} по {4}. \r\n" +
-                                "Автор брони {5}.",
-                        subscriber.getFio(),
-                        message.getCreateBookingDate().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
-                                .withLocale(Locale.forLanguageTag("ru"))),
-                        message.getRoomName(),
-                        message.getBeginBookingDate().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
-                                .withLocale(Locale.forLanguageTag("ru"))),
-                        message.getEndBookingDate().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
-                                .withLocale(Locale.forLanguageTag("ru"))),
-                        message.getFioOfBooking()
-                );
+    @Override
+    public MessageCreator transformReminder(BookingNotificationReminder message) {
+        MessageCreator messageCreator = new MessageCreator(new PhoneNumber(message.getSubscriber().getMobilePhone()),
+                new PhoneNumber(notificationProperties.getSms().getTwilioPhoneNumber()),
+                "");
+
+        messageCreator.setBody(MessageUtils.textReminder(message));
+        return messageCreator;
     }
 
-    private String textUpdate(BookingNotify message, Subscriber subscriber) {
-        return MessageFormat
-                .format("{0}, {1} была изменена бронь переговорки \"{2}\". \r\n" +
-                                "Период брони с {3} по {4}. \r\n" +
-                                "Автор изменений {5}.",
-                        subscriber.getFio(),
-                        message.getUpdateBookingDate().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
-                                .withLocale(Locale.forLanguageTag("ru"))),
-                        message.getRoomName(),
-                        message.getBeginBookingDate().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
-                                .withLocale(Locale.forLanguageTag("ru"))),
-                        message.getEndBookingDate().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
-                                .withLocale(Locale.forLanguageTag("ru"))),
-                        message.getFioOfBooking()
-                );
-    }
-
-    private String textDelete(BookingNotify message, Subscriber subscriber) {
-        return MessageFormat
-                .format("{0}, {1} была удалена бронь с переговорки \"{2}\" с {3} по {4}. \r\n" +
-                                "Автор изменений {5}.",
-                        subscriber.getFio(),
-                        message.getDeleteBookingDate().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
-                                .withLocale(Locale.forLanguageTag("ru"))),
-                        message.getRoomName(),
-                        message.getBeginBookingDate().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
-                                .withLocale(Locale.forLanguageTag("ru"))),
-                        message.getEndBookingDate().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
-                                .withLocale(Locale.forLanguageTag("ru"))),
-                        message.getFioOfBooking()
-                );
-    }
 }

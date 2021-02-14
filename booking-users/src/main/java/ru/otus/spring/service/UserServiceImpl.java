@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.domain.User;
 import ru.otus.spring.domain.UserRole;
 import ru.otus.spring.dto.UserDto;
@@ -28,6 +29,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserMapper mapper;
 
+    @Transactional(readOnly = true)
     @Override
     public Page<UserDto> getUsers(Pageable pageable) {
         return userRepository.findAll(pageable)
@@ -35,6 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Transactional
     @Override
     public UserDto createUser(UserDto userDto) {
         User user = mapper.toUser(userDto);
@@ -47,6 +50,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Transactional
     @Override
     public void lockUser(Long userId) {
         User user = userRepository.findById(userId)
@@ -56,6 +60,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Transactional
     @Override
     public void unlockUser(Long userId) {
         User user = userRepository.findById(userId)
@@ -65,6 +70,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Transactional
     @Override
     public void enableUser(Long userId) {
         User user = userRepository.findById(userId)
@@ -74,6 +80,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Transactional
     @Override
     public void disableUser(Long userId) {
         User user = userRepository.findById(userId)
@@ -83,6 +90,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Transactional
     @Override
     public void editUser(UserDto user) {
         User userOld = userRepository.findById(user.getId())
@@ -92,6 +100,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(userOld);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public UserDto getUserByLogin(String login) {
         User user = userRepository.findByLogin(login)

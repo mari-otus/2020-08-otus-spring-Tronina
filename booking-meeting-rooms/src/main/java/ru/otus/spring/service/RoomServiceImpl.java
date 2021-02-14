@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.domain.Booking;
 import ru.otus.spring.domain.Room;
 import ru.otus.spring.domain.Subscribing;
@@ -32,6 +33,7 @@ public class RoomServiceImpl implements RoomService {
     private final SubscribingService subscribingService;
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Transactional
     @Override
     public void createRoom(RoomDto roomRequest) {
         Room room = mapper.toRoom(roomRequest);
@@ -39,6 +41,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Transactional
     @Override
     public void updateRoom(Long roomId, RoomDto roomRequest) {
         Room room = roomRepository.findById(roomId)
@@ -56,19 +59,21 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Transactional
     @Override
     public List<RoomResponseDto> deleteRoom(Long roomId) {
         Room room = roomRepository.findById(roomId)
                 .orElseThrow(ApplicationException::new);
         List<Booking> bookingList = bookingRepository.findAllByRoomIdAndDeleteDateIsNull(roomId);
         if (CollectionUtils.isNotEmpty(bookingList)) {
-            throw new ApplicationException("Room has booking!");
+            throw new ApplicationException("Удаление невозможно. На эту переговорную комнату найдена активная бронь");
         }
         room.setDeleteDate(LocalDateTime.now());
         roomRepository.save(room);
         return getRooms(RoomFilter.builder().build());
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<RoomResponseDto> getRooms(RoomFilter roomFilter) {
         List<Subscribing> subscribeRoom = subscribingService.getSubscribeRoom();
@@ -86,6 +91,7 @@ public class RoomServiceImpl implements RoomService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     @Override
     public RoomResponseDto getRoom(Long roomId) {
         return roomRepository.findById(roomId)

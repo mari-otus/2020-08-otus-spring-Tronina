@@ -2,6 +2,7 @@ package ru.otus.spring.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.domain.Profile;
 import ru.otus.spring.dto.ProfileDto;
 import ru.otus.spring.exception.ApplicationException;
@@ -19,6 +20,8 @@ public class ProfileServiceImpl implements ProfileService {
     private final ProfileRepository profileRepository;
     private final BookingMapper mapper;
 
+
+    @Transactional(readOnly = true)
     @Override
     public ProfileDto getProfile(AuthUserDetails authUserDetails) {
         Profile profile = profileRepository.findByLoginEquals(authUserDetails.getUsername())
@@ -26,6 +29,7 @@ public class ProfileServiceImpl implements ProfileService {
         return mapper.toProfileDto(profile);
     }
 
+    @Transactional
     @Override
     public ProfileDto createProfile(AuthUserDetails authUserDetails) {
         Profile profile = profileRepository.findByLoginEquals(authUserDetails.getUsername())
@@ -37,6 +41,7 @@ public class ProfileServiceImpl implements ProfileService {
         return mapper.toProfileDto(profile);
     }
 
+    @Transactional
     @Override
     public void updateProfile(ProfileDto updateRequest, AuthUserDetails authUserDetails) {
         Profile profile = profileRepository.findByLoginEquals(authUserDetails.getUsername())

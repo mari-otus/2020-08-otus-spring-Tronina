@@ -19,7 +19,7 @@ public class RoomCustomRepositoryImpl implements RoomCustomRepository {
     @Override
     public List<Room> findAllByFilter(RoomFilter filter) {
         Query query = em.createQuery("select r from Room r " +
-                "where r.deleteDate is null " +
+                        "where r.deleteDate is null " +
                         (filter.getCapacity() != null ? "and  r.capacity = :capacity " : "") +
                         (filter.getRoomName() != null ? "and r.roomName = :roomName " : "") +
                         (filter.getHasVideoconference() != null ? "and r.hasVideoconference = :hasVideoconference " : "") +

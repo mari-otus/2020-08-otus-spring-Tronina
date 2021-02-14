@@ -11,7 +11,9 @@ import ru.otus.spring.client.NotificationClient;
 import ru.otus.spring.domain.Booking;
 import ru.otus.spring.domain.Profile;
 import ru.otus.spring.domain.Subscribing;
+import ru.otus.spring.dto.BookingDto;
 import ru.otus.spring.dto.BookingNotify;
+import ru.otus.spring.dto.BookingNotificationReminder;
 import ru.otus.spring.dto.ProfileUserDto;
 import ru.otus.spring.dto.UserDto;
 import ru.otus.spring.repository.ProfileRepository;
@@ -20,7 +22,9 @@ import ru.otus.spring.security.AuthUserDetails;
 import ru.otus.spring.service.UserService;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -37,12 +41,19 @@ public class NotifyManager {
     private final UserService userService;
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
-    public void notify(Booking booking) {
+    public void notifyEvent(Booking booking) {
+        UserDto userEditor;
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
-        AuthUserDetails userDetails = (AuthUserDetails) authenticationToken.getPrincipal();
-        final UserDto userEditor = userService.getUserByLogin(userDetails.getUsername());
-
+        if (principal != null) {
+            UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
+            AuthUserDetails userDetails = (AuthUserDetails) authenticationToken.getPrincipal();
+            userEditor = userService.getUserByLogin(userDetails.getUsername());
+        } else {
+            userEditor = UserDto.builder()
+                    .login("trusted_user")
+                    .fio("Система")
+                    .build();
+        }
         final Long roomId = booking.getRoom().getId();
         List<Subscribing> subscribings = subscribingRepository.findAllByRoom_Id(roomId);
         List<ProfileUserDto> profileUserDtos = subscribings.stream()
@@ -71,7 +82,35 @@ public class NotifyManager {
                     .updateBookingDate(booking.getUpdateDate())
                     .deleteBookingDate(booking.getDeleteDate())
                     .build();
-            notificationClient.notify(bookingNotify);
+            notificationClient.notifyEvent(bookingNotify);
         }
+    }
+
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+    public void notifyReminder(List<BookingDto> bookings) {
+        List<BookingNotificationReminder> bookingNotificationReminders = new ArrayList<>();
+        bookings.stream()
+                .forEach(booking -> {
+                    Optional<Profile> profile = profileRepository.findByLoginEquals(booking.getLogin());
+                    profile.ifPresent(profile1 -> {
+                        if (profile1.isEmailNotify() || profile1.isPhoneNotify()) {
+                            final UserDto userByLogin = userService.getUserByLogin(profile1.getLogin());
+                            BookingNotificationReminder bookingNotificationReminder = BookingNotificationReminder.builder()
+                                    .subscriber(ProfileUserDto.builder()
+                                            .fio(userByLogin.getFio())
+                                            .email(profile1.getEmail())
+                                            .mobilePhone(profile1.getMobilePhone())
+                                            .isEmailNotify(profile1.isEmailNotify())
+                                            .isPhoneNotify(profile1.isPhoneNotify())
+                                            .build())
+                                    .roomName(booking.getRoomName())
+                                    .beginBookingDate(booking.getBeginDate())
+                                    .endBookingDate(booking.getEndDate())
+                                    .build();
+                            bookingNotificationReminders.add(bookingNotificationReminder);
+                        }
+                    });
+                });
+        notificationClient.notifyReminder(bookingNotificationReminders);
     }
 }

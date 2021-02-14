@@ -28,6 +28,8 @@ public interface BookingMapper {
     BookingDto toBookingDto(Booking booking);
 
     Room toRoom(RoomDto roomDto);
+
     RoomDto toRoomDto(Room room);
+
     RoomResponseDto toRoomResponseDto(Room room);
 }

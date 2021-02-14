@@ -13,6 +13,7 @@ import org.springframework.integration.scheduling.PollerMetadata;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.messaging.PollableChannel;
+import ru.otus.spring.model.BookingNotificationReminder;
 import ru.otus.spring.service.TransformMessageService;
 
 
@@ -23,6 +24,7 @@ public class IntegrationConfig {
     private static final int DEFAULT_POLLER_PERIOD = 1000;
 
     private static final String TRANSFORM_METHOD_NAME = "transform";
+    private static final String TRANSFORM_REMINDER_METHOD_NAME = "transformReminder";
 
     @Autowired
     @Qualifier("transformMailMessageService")
@@ -42,6 +44,16 @@ public class IntegrationConfig {
     @Bean
     public PollableChannel bookingRoomInSmsChannel() {
         return MessageChannels.queue("bookingRoomInSmsChannel", DEFAULT_QUEUE_CAPACITY).get();
+    }
+
+    @Bean
+    public PollableChannel bookingRoomReminderInEmailChannel() {
+        return MessageChannels.queue("bookingRoomReminderInEmailChannel", DEFAULT_QUEUE_CAPACITY).get();
+    }
+
+    @Bean
+    public PollableChannel bookingRoomReminderInSmsChannel() {
+        return MessageChannels.queue("bookingRoomReminderInSmsChannel", DEFAULT_QUEUE_CAPACITY).get();
     }
 
     @Bean(name = PollerMetadata.DEFAULT_POLLER)
@@ -66,6 +78,30 @@ public class IntegrationConfig {
         return f -> f.channel(bookingRoomInSmsChannel())
                 .transform(messageSmsTransformer, TRANSFORM_METHOD_NAME)
                 .split()
+                .handle(message -> {
+                    final MessageCreator payload = (MessageCreator) message.getPayload();
+                    payload.create();
+                });
+    }
+
+    @Bean
+    public IntegrationFlow notifyReminderEmailFlow() {
+        return f -> f.channel(bookingRoomReminderInEmailChannel())
+                .split()
+                .filter(source -> ((BookingNotificationReminder)source).getSubscriber().isEmailNotify())
+                .transform(messageEmailTransformer, TRANSFORM_REMINDER_METHOD_NAME)
+                .handle(m -> {
+                    SimpleMailMessage simpleMailMessage = (SimpleMailMessage) m.getPayload();
+                    mailSender.send(simpleMailMessage);
+                });
+    }
+
+    @Bean
+    public IntegrationFlow notifyReminderSmsFlow() {
+        return f -> f.channel(bookingRoomReminderInSmsChannel())
+                .split()
+                .filter(source -> ((BookingNotificationReminder)source).getSubscriber().isPhoneNotify())
+                .transform(messageSmsTransformer, TRANSFORM_REMINDER_METHOD_NAME)
                 .handle(message -> {
                     final MessageCreator payload = (MessageCreator) message.getPayload();
                     payload.create();

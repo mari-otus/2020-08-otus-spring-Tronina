@@ -20,4 +20,8 @@ public interface BookingService {
     List<BookingDto> getBookings(BookingFilter bookingFilter);
 
     BookingDto getBooking(Long bookingId);
+
+    void completedBookings();
+
+    List<BookingDto> getSoonStartingBookings(int minutes);
 }

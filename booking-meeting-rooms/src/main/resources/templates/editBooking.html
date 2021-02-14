@@ -44,9 +44,9 @@
         var beginDate = document.getElementById("booking_begin").value;
         var endDate = document.getElementById("booking_end").value;
         var beginDateZ = new Date(beginDate);
-        beginDateZ.setTime( beginDateZ.getTime() - beginDateZ.getTimezoneOffset()*60*1000 );
+        beginDateZ.setTime(beginDateZ.getTime() - beginDateZ.getTimezoneOffset() * 60 * 1000);
         var endDateZ = new Date(endDate);
-        endDateZ.setTime( endDateZ.getTime() - endDateZ.getTimezoneOffset()*60*1000 );
+        endDateZ.setTime(endDateZ.getTime() - endDateZ.getTimezoneOffset() * 60 * 1000);
         let type = 'POST';
         let url = '/booking_meeting_rooms/api/bookings/';
         if (id !== null) {

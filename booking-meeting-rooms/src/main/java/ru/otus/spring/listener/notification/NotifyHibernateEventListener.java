@@ -26,20 +26,20 @@ public class NotifyHibernateEventListener implements PostInsertEventListener, Po
     @Override
     public void onPostInsert(PostInsertEvent event) {
         if (event.getEntity() instanceof Booking) {
-            notifyManager.notify((Booking) event.getEntity());
+            notifyManager.notifyEvent((Booking) event.getEntity());
         }
     }
 
     @Override
     public void onPostUpdate(PostUpdateEvent event) {
         if (event.getEntity() instanceof Booking) {
-            notifyManager.notify((Booking) event.getEntity());
+            notifyManager.notifyEvent((Booking) event.getEntity());
         }
     }
 
     @Override
     public void onPostDelete(PostDeleteEvent event) {
-        notifyManager.notify((Booking) event.getEntity());
+        notifyManager.notifyEvent((Booking) event.getEntity());
     }
 
     @Override

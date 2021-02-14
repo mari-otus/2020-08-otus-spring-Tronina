@@ -46,6 +46,7 @@ public class BookingServiceImpl implements BookingService {
 
     }
 
+    @Transactional
     @Override
     public void updateBooking(Long bookingId, BookingDto bookingRequest,
                               AuthUserDetails authUserDetails) {
@@ -75,6 +76,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @PostFilter("hasRole('ROLE_ADMIN') or filterObject.login == authentication.name")
+    @Transactional(readOnly = true)
     @Override
     public List<BookingDto> getBookings(BookingFilter bookingFilter) {
         return bookingRepository.findAllActiveByFilter(bookingFilter).stream()
@@ -82,11 +84,28 @@ public class BookingServiceImpl implements BookingService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     @Override
     public BookingDto getBooking(Long bookingId) {
         return bookingRepository.findById(bookingId)
                 .map(mapper::toBookingDto)
                 .orElseThrow(ApplicationException::new);
+    }
+
+    @Transactional
+    @Override
+    public void completedBookings() {
+        bookingRepository.updateCompleteBookings();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<BookingDto> getSoonStartingBookings(int minutes) {
+        return bookingRepository.findAllByDeleteDateIsNullAndBeginDateBetween(LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(minutes))
+                .stream()
+                .map(mapper::toBookingDto)
+                .collect(Collectors.toList());
     }
 
 }

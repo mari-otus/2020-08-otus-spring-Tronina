@@ -11,4 +11,6 @@ import java.util.List;
 public interface BookingCustomRepository {
 
     List<Booking> findAllActiveByFilter(BookingFilter filter);
+
+    void updateCompleteBookings();
 }

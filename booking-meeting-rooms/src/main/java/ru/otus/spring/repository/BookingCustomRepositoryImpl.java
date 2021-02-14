@@ -7,6 +7,7 @@ import ru.otus.spring.dto.BookingFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -25,9 +26,11 @@ public class BookingCustomRepositoryImpl implements BookingCustomRepository {
                         (filter.getLogin() != null ? "and b.login = :login " : "") +
                         (filter.getRoomName() != null ? "and b.room.roomName = :roomName " : "") +
                         (filter.getStartBooking() != null
-                         ? "and function('to_char', b.beginDate, 'YYYY-mm-dd HH24:MI')  between :startBeginDate and :startEndDate " : "") +
+                         ? "and function('to_char', b.beginDate, 'YYYY-mm-dd HH24:MI')  between :startBeginDate and :startEndDate "
+                         : "") +
                         (filter.getEndBooking() != null
-                         ? "and function('to_char', b.endDate, 'YYYY-mm-dd HH24:MI')  between :endBeginDate and :endEndDate " : "") ,
+                         ? "and function('to_char', b.endDate, 'YYYY-mm-dd HH24:MI')  between :endBeginDate and :endEndDate "
+                         : ""),
                 Booking.class);
         if (filter.getLogin() != null) {
             query.setParameter("login", filter.getLogin());
@@ -38,23 +41,37 @@ public class BookingCustomRepositoryImpl implements BookingCustomRepository {
         if (filter.getStartBooking() != null) {
             if (filter.getStartBooking().getBeginPeriod() != null || filter.getStartBooking().getEndPeriod() != null) {
                 query.setParameter("startBeginDate",
-                        ObjectUtils.firstNonNull(filter.getStartBooking().getBeginPeriod(), filter.getStartBooking().getEndPeriod() ).format(
+                        ObjectUtils.firstNonNull(filter.getStartBooking().getBeginPeriod(),
+                                filter.getStartBooking().getEndPeriod()).format(
                                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
                 query.setParameter("startEndDate",
-                        ObjectUtils.firstNonNull(filter.getStartBooking().getEndPeriod() , filter.getStartBooking().getBeginPeriod()).format(
+                        ObjectUtils.firstNonNull(filter.getStartBooking().getEndPeriod(),
+                                filter.getStartBooking().getBeginPeriod()).format(
                                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
             }
         }
         if (filter.getEndBooking() != null) {
             if (filter.getEndBooking().getBeginPeriod() != null || filter.getEndBooking().getEndPeriod() != null) {
                 query.setParameter("endBeginDate",
-                        ObjectUtils.firstNonNull(filter.getEndBooking().getBeginPeriod(), filter.getEndBooking().getEndPeriod() ).format(
+                        ObjectUtils.firstNonNull(filter.getEndBooking().getBeginPeriod(),
+                                filter.getEndBooking().getEndPeriod()).format(
                                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
                 query.setParameter("endEndDate",
-                        ObjectUtils.firstNonNull(filter.getEndBooking().getEndPeriod() , filter.getEndBooking().getBeginPeriod()).format(
+                        ObjectUtils.firstNonNull(filter.getEndBooking().getEndPeriod(),
+                                filter.getEndBooking().getBeginPeriod()).format(
                                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
             }
         }
         return query.getResultList();
+    }
+
+    @Override
+    public void updateCompleteBookings() {
+        Query query = em.createQuery("update Booking b set b.deleteDate = :deleteDate " +
+                "where b.deleteDate is null " +
+                "and b.endDate < :currentDate");
+        query.setParameter("deleteDate", LocalDateTime.now());
+        query.setParameter("currentDate", LocalDateTime.now());
+        query.executeUpdate();
     }
 }

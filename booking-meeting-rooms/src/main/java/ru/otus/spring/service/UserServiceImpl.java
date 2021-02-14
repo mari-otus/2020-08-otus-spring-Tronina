@@ -1,9 +1,9 @@
 package ru.otus.spring.service;
 
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.client.UserClient;
 import ru.otus.spring.dto.UserDto;
 import ru.otus.spring.exception.ApplicationException;
@@ -17,6 +17,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserClient userClient;
 
+    @Transactional
     @Override
     public UserDto getUserByLogin(String login) {
         ResponseEntity<UserDto> response = userClient.getUserByLogin(login);

@@ -3,6 +3,7 @@ package ru.otus.spring.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.otus.spring.domain.Booking;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,5 +17,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long>, Booking
     List<Booking> findAllByRoomIdAndDeleteDateIsNull(Long roomId);
 
     Optional<Booking> findByIdEqualsAndAndLoginEquals(Long id, String login);
+
+    List<Booking> findAllByDeleteDateIsNullAndBeginDateBetween(LocalDateTime dateStart, LocalDateTime dateEnd);
 
 }
