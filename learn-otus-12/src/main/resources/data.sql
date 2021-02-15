@@ -1,11 +1,11 @@
-insert into author(id, fio) values
+insert into authorSource(id, fio) values
     (1, 'Толстой Лев Николаевич'),
     (2, 'Пушкин Александр Сергеевич'),
     (3, 'Дойл Артур Конан'),
     (4, 'Стругацкий Аркадий Натанович'),
     (5, 'Стругацкий Борис Натанович');
 
-insert into genre(id, name) values
+insert into genreSource(id, name) values
     (1, 'Роман'),
     (2, 'Рассказ'),
     (3, 'Повесть'),
@@ -16,7 +16,7 @@ insert into genre(id, name) values
     (8, 'Фантастика'),
     (9, 'Юмор');
 
-insert into book(id, name, year_edition) values
+insert into bookSource(id, name, year_edition) values
     (1, 'Война и мир', 1981),
     (2, 'Хаджи-Мурат', 1975),
     (3, 'Евгений Онегин', 1987),

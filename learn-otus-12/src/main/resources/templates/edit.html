@@ -10,15 +10,15 @@
 <div th:insert="header.html"></div>
 
 <h1>Редактирование книги</h1>
-<form id="edit-form" th:action="@{/books/__${book.id}__}" th:method="post" action="edit.html">
+<form id="edit-form" th:action="@{/books/__${bookSource.id}__}" th:method="post" action="edit.html">
     <div class="row">
         <label for="book_name">Наименование:</label>
-        <input id="book_name" name="name" type="text" th:value="${book.name}" value="John Doe"/>
+        <input id="book_name" name="name" type="text" th:value="${bookSource.name}" value="John Doe"/>
     </div>
 
     <div class="row">
         <label for="book_yearEdition">Год издания:</label>
-        <input id="book_yearEdition" name="yearEdition" type="text" th:value="${book.yearEdition}" value="John Doe"/>
+        <input id="book_yearEdition" name="yearEdition" type="text" th:value="${bookSource.yearEdition}" value="John Doe"/>
     </div>
 
     <div class="row">

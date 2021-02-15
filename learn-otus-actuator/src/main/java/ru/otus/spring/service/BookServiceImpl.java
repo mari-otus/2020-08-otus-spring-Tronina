@@ -2,6 +2,7 @@ package ru.otus.spring.service;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.data.domain.Example;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -55,6 +56,10 @@ public class BookServiceImpl implements BookService {
             throw new BookListEmptyException();
         }
         return books;
+    }
+
+    public boolean check(){
+        return bookRepository.check() > 0;
     }
 
 }

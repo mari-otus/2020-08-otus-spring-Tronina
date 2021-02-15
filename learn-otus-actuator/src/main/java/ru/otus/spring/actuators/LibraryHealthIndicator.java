@@ -22,7 +22,7 @@ public class LibraryHealthIndicator implements HealthIndicator {
 
     @Override
     public Health health() {
-        List<Book> allBook = bookService.getAllBook();
+        List<Book> allBook = bookService.check();
         if (CollectionUtils.isEmpty(allBook)) {
             return Health.down()
                     .status(Status.DOWN)
