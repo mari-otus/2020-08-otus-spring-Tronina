@@ -1,0 +1,20 @@
+server:
+  port: 7000
+
+spring:
+  application:
+    name: config_server
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/mari-otus/2020-08-otus-spring-config-Tronina
+          searchPaths: '{application}'
+          username: mari-otus
+          password: xs87be89
+
+logging:
+  level:
+    ru.otus: debug
+    org.springframework: debug

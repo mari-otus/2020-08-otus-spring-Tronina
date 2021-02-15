@@ -46,7 +46,7 @@
         const hasVideoconference = $("#hasVideoconference").is(":checked");
         const hasConditioner = $("#hasConditioner").is(":checked");
         let type = 'POST';
-        let url = '/booking_meeting_rooms/api/rooms/';
+        let url = '/api/rooms/';
         if (id !== null) {
             type = 'PUT';
             url = url + id;
@@ -62,7 +62,7 @@
             }),
             contentType: "application/json",
             success: function () {
-                document.location.href = "/booking_meeting_rooms/rooms";
+                document.location.href = "/rooms";
             },
             error: function (result) {
                 alert(result.responseJSON.message);

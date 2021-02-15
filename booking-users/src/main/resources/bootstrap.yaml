@@ -1,0 +1,50 @@
+server:
+  port: 9003
+
+spring:
+  application:
+    name: booking_users
+  cloud:
+    config:
+      uri: http://localhost:7000
+
+#  datasource:
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5432/booking_users
+#    username: postgres
+#    password: postgres
+#    initialization-mode: always
+#    sql-script-encoding: utf-8
+#  flyway:
+#    enabled: true
+#    encoding: UTF-8
+#    locations: classpath:/db/migration/
+#    validate-on-migrate: true
+#    baseline-on-migrate: true
+#    out-of-order: true
+#
+#  jpa:
+#    generate-ddl: false
+#    hibernate:
+#      ddl-auto: none
+#
+#    properties:
+#      hibernate:
+#        format_sql: true
+#
+#    show-sql: true
+#
+#  jackson:
+#    serialization:
+#      write_dates_as_timestamps: false
+
+management:
+  endpoints:
+    web:
+      expousure:
+        include: "*"
+
+logging:
+  level:
+    ru.otus: debug
+    org.springframework: debug

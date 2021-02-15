@@ -37,7 +37,7 @@
     function saveb() {
         $.ajax({
             type: 'PUT',
-            url: "/booking_meeting_rooms/api/profiles",
+            url: "/api/profiles",
             data: JSON.stringify({
                 "email": $("#email").val(),
                 "mobilePhone": $("#mobilePhone").val(),
@@ -46,7 +46,7 @@
             }),
             contentType: "application/json",
             success: function () {
-                document.location.href = "/booking_meeting_rooms";
+                document.location.href = "/";
             },
             error: function (result) {
                 alert(result.responseJSON.message);
@@ -57,7 +57,7 @@
     $(function () {
         $.ajax({
             type: 'GET',
-            url: "/booking_meeting_rooms/api/profiles",
+            url: "/api/profiles",
             dataType: "json",
             contentType: "application/json",
             success: function (profile) {
@@ -73,7 +73,7 @@
             error: function () {
                 $.ajax({
                     type: 'POST',
-                    url: "/booking_meeting_rooms/api/profiles",
+                    url: "/api/profiles",
                     dataType: "json",
                     contentType: "application/json",
                     success: function (profile) {

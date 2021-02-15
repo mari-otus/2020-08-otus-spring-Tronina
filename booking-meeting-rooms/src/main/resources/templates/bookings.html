@@ -25,13 +25,13 @@
     </tbody>
 </table>
 <td>
-    <a href="/booking_meeting_rooms/bookings/add">add</a>
+    <a href="/bookings/add">add</a>
 </td>
 <script>
     function deleteb(id) {
         $.ajax({
             type: 'DELETE',
-            url: `/booking_meeting_rooms/api/bookings/${id}`,
+            url: `/api/bookings/${id}`,
             data: id,
             contentType: "application/json",
             success: function (bookings) {
@@ -47,7 +47,7 @@
     $(function () {
         $.ajax({
             type: 'POST',
-            url: "/booking_meeting_rooms/api/bookings/search",
+            url: "/api/bookings/search",
             data: JSON.stringify({}),
             dataType: "json",
             contentType: "application/json",
@@ -71,7 +71,7 @@
                         <td>${new Date(booking.beginDate).toLocaleString("ru-RU")}</td>
                         <td>${new Date(booking.endDate).toLocaleString("ru-RU")}</td>
                         <td>
-                            <a href="/booking_meeting_rooms/bookings/${booking.id}">edit</a>
+                            <a href="/bookings/${booking.id}">edit</a>
                         </td>
                         <td>
                             <button type="button" onclick="deleteb(${booking.id})">delete</button>

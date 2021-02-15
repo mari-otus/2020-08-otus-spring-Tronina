@@ -48,7 +48,7 @@
         var endDateZ = new Date(endDate);
         endDateZ.setTime(endDateZ.getTime() - endDateZ.getTimezoneOffset() * 60 * 1000);
         let type = 'POST';
-        let url = '/booking_meeting_rooms/api/bookings/';
+        let url = '/api/bookings/';
         if (id !== null) {
             type = 'PUT';
             url = url + id;
@@ -63,7 +63,7 @@
             }),
             contentType: "application/json",
             success: function () {
-                document.location.href = "/booking_meeting_rooms/bookings";
+                document.location.href = "/bookings";
             },
             error: function (result) {
                 alert(result.responseJSON.message);

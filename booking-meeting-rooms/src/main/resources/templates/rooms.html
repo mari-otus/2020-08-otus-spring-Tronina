@@ -28,14 +28,14 @@
     </tbody>
 </table>
 <td>
-    <a href="/booking_meeting_rooms/rooms/add">add</a>
+    <a href="/rooms/add">add</a>
 </td>
 
 <script>
     function subscribe(id) {
         $.ajax({
             type: 'POST',
-            url: `/booking_meeting_rooms/api/subscribing/rooms/${id}`,
+            url: `/api/subscribing/rooms/${id}`,
             data: id,
             contentType: "application/json",
             error: function (result) {
@@ -45,7 +45,7 @@
                 $('tbody').empty();
                 $.ajax({
                     type: 'POST',
-                    url: "/booking_meeting_rooms/api/rooms/search",
+                    url: "/api/rooms/search",
                     data: JSON.stringify({}),
                     dataType: "json",
                     contentType: "application/json",
@@ -60,7 +60,7 @@
     function unsubscribe(id) {
         $.ajax({
             type: 'DELETE',
-            url: `/booking_meeting_rooms/api/subscribing/rooms/${id}`,
+            url: `/api/subscribing/rooms/${id}`,
             data: id,
             contentType: "application/json",
             error: function (result) {
@@ -70,7 +70,7 @@
                 $('tbody').empty();
                 $.ajax({
                     type: 'POST',
-                    url: "/booking_meeting_rooms/api/rooms/search",
+                    url: "/api/rooms/search",
                     data: JSON.stringify({}),
                     dataType: "json",
                     contentType: "application/json",
@@ -85,7 +85,7 @@
     function deleteb(id) {
         $.ajax({
             type: 'DELETE',
-            url: `/booking_meeting_rooms/api/rooms/${id}`,
+            url: `/api/rooms/${id}`,
             data: id,
             contentType: "application/json",
             error: function (result) {
@@ -101,7 +101,7 @@
     $(function () {
         $.ajax({
             type: 'POST',
-            url: "/booking_meeting_rooms/api/rooms/search",
+            url: "/api/rooms/search",
             data: JSON.stringify({}),
             dataType: "json",
             contentType: "application/json",
@@ -123,7 +123,7 @@
                         <td>${room.hasVideoconference}</td>
                         <td>${room.hasSubscribe}</td>
                         <td>
-                            <a href="/booking_meeting_rooms/rooms/${room.id}">edit</a>
+                            <a href="/rooms/${room.id}">edit</a>
                         </td>
                         <td>
                             <button type="button" onclick="deleteb(${room.id})">delete</button>
@@ -135,7 +135,7 @@
                             <button type="button" onclick="unsubscribe(${room.id})" ${!room.hasSubscribe ? ' disabled' : ''}>unsubscribe</button>
                         </td>
                         <td>
-                            <a href="/booking_meeting_rooms/bookings/add/${room.id}">booking</a>
+                            <a href="/bookings/add/${room.id}">booking</a>
                         </td>
                     </tr>
                 `)
