@@ -1,17 +1,17 @@
 drop table if exists book_author;
 drop table if exists book_genre;
 drop table if exists comment_book;
-drop table if exists bookSource;
-drop table if exists genreSource;
-drop table if exists authorSource;
+drop table if exists book;
+drop table if exists genre;
+drop table if exists author;
 drop table if exists users_role;
 drop table if exists roles;
 drop table if exists users;
 
 ------------------------------
--- table: authorSource            --
+-- table: author            --
 ------------------------------
-create table authorSource
+create table author
 (
     id bigserial
         constraint author_pk
@@ -19,14 +19,14 @@ create table authorSource
     fio text not null
 );
 
-comment on table authorSource is 'Авторы';
-comment on column authorSource.fio is 'Фамилия имя отчество';
+comment on table author is 'Авторы';
+comment on column author.fio is 'Фамилия имя отчество';
 
 ------------------------------
--- table: genreSource             --
+-- table: genre             --
 ------------------------------
 
-create table genreSource
+create table genre
 (
     id bigserial
         constraint genre_pk
@@ -34,14 +34,14 @@ create table genreSource
     name text not null
 );
 
-comment on table genreSource is 'Жанры';
-comment on column genreSource.name is 'Наименование жанра';
+comment on table genre is 'Жанры';
+comment on column genre.name is 'Наименование жанра';
 
 ------------------------------
--- table: bookSource              --
+-- table: book              --
 ------------------------------
 
-create table bookSource
+create table book
 (
 	id bigserial
 		constraint book_pk
@@ -50,9 +50,9 @@ create table bookSource
 	year_edition int
 );
 
-comment on table bookSource is 'Книги';
-comment on column bookSource.name is 'Название книги';
-comment on column bookSource.year_edition is 'Год издания';
+comment on table book is 'Книги';
+comment on column book.name is 'Название книги';
+comment on column book.year_edition is 'Год издания';
 
 ------------------------------
 -- table: comment           --
@@ -70,7 +70,7 @@ comment on column comment_book.book_id is 'Идентификатор книги
 
 alter table comment_book
     add constraint comment_book_fk
-        foreign key (book_id) references bookSource
+        foreign key (book_id) references book
             on update cascade on delete cascade;
 
 ------------------------------
@@ -89,12 +89,12 @@ comment on column book_author.author_id is 'Идентификатор авто�
 
 alter table book_author
     add constraint book_fk
-        foreign key (book_id) references bookSource
+        foreign key (book_id) references book
             on update cascade on delete cascade;
 
 alter table book_author
     add constraint author_fk
-        foreign key (author_id) references authorSource
+        foreign key (author_id) references author
             on update cascade on delete cascade;
 
 ------------------------------
@@ -113,12 +113,12 @@ comment on column book_genre.genre_id is 'Идентификатор жанра'
 
 alter table book_genre
     add constraint genre_book_fk
-        foreign key (book_id) references bookSource
+        foreign key (book_id) references book
             on update cascade on delete cascade;
 
 alter table book_genre
     add constraint genre_fk
-        foreign key (genre_id) references genreSource
+        foreign key (genre_id) references genre
             on update cascade on delete cascade;
 
 alter sequence if exists author_id_seq restart with 10;

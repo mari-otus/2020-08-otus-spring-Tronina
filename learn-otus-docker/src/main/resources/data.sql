@@ -1,14 +1,14 @@
-insert into authorSource(id, fio) values
+insert into author(id, fio) values
     (1, 'Толстой Лев Николаевич'),
     (2, 'Дойл Артур Конан');
 
-insert into genreSource(id, name) values
+insert into genre(id, name) values
     (1, 'Роман'),
     (2, 'Рассказ'),
     (3, 'Повесть'),
     (4, 'Детектив');
 
-insert into bookSource(id, name, year_edition) values
+insert into book(id, name, year_edition) values
     (1, 'Война и мир', 1981),
     (2, 'Полное собрание повестей и рассказов о Шерлоке Холмсе в одном томе', 1998);
 

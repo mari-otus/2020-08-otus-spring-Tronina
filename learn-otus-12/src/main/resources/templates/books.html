@@ -22,21 +22,21 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="bookSource : ${books}">
-        <td th:text="${bookSource.name}">John Doe</td>
-        <td th:text="${bookSource.yearEdition}">1</td>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.name}">John Doe</td>
+        <td th:text="${book.yearEdition}">1</td>
         <td>
             <ul>
-                <li th:each="authorSource : ${bookSource.authors}" th:text="${authorSource.fio}">authorSource name</li>
+                <li th:each="author : ${book.authors}" th:text="${author.fio}">author name</li>
             </ul>
         </td>
         <td>
             <ul>
-                <li th:each="genreSource : ${bookSource.genres}" th:text="${genreSource.name}">genreSource name</li>
+                <li th:each="genre : ${book.genres}" th:text="${genre.name}">genre name</li>
             </ul>
         </td>
         <td>
-            <a th:href="@{/books/__${bookSource.id}__}" href="edit.html">edit</a>
+            <a th:href="@{/books/__${book.id}__}" href="edit.html">edit</a>
         </td>
     </tr>
     </tbody>
