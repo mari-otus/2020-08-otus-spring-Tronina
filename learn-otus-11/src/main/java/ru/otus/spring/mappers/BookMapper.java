@@ -5,7 +5,7 @@ import ru.otus.spring.domain.Book;
 import ru.otus.spring.dto.BookDto;
 
 /**
- * @author Mariya Tronina
+ * @author MTronina
  */
 @Mapper
 public interface BookMapper {

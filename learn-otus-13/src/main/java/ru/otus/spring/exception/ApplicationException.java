@@ -3,7 +3,7 @@ package ru.otus.spring.exception;
 /**
  * Базовое исключение.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 public class ApplicationException extends RuntimeException {
 

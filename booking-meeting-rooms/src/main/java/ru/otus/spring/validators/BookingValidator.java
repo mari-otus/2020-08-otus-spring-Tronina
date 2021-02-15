@@ -1,8 +1,3 @@
-/*
- * VTB Group. Do not reproduce without permission in writing.
- * Copyright (c) 2020 VTB Group. All rights reserved.
- */
-
 package ru.otus.spring.validators;
 
 import org.hibernate.validator.internal.engine.constraintvalidation.CrossParameterConstraintValidatorContextImpl;
@@ -15,7 +10,7 @@ import javax.validation.constraintvalidation.ValidationTarget;
 import java.util.List;
 
 /**
- * Проверяет что параметры X-Mdm-Id и X-UNC одновременно не равны null.
+ * Проверяет даты бронирования на валидность.
  *
  * @author MTronina
  */
@@ -30,7 +25,8 @@ public class BookingValidator implements
     }
 
     /**
-     * Проверяет что параметры X-Mdm-Id и X-UNC одновременно не равны null.
+     * Проверяет что в теле запроса booking даты начала и конца бронирования заданы правильно
+     * (дата начала строго меньше даты конца бронирования).
      *
      * @param value   список параметров метода
      * @param context контекст проверки
@@ -44,11 +40,10 @@ public class BookingValidator implements
         if (bookingIndex != -1 && value[bookingIndex] != null) {
             BookingRequestDto bookingRequestDto = (BookingRequestDto) value[bookingIndex];
             if (bookingRequestDto.getBeginDate() != null && bookingRequestDto.getEndDate() != null) {
-                if (bookingRequestDto.getBeginDate().compareTo(bookingRequestDto.getEndDate()) >=0 ) {
+                if (bookingRequestDto.getBeginDate().compareTo(bookingRequestDto.getEndDate()) >= 0) {
                     return false;
                 }
             }
-            return true;
         }
         return true;
     }

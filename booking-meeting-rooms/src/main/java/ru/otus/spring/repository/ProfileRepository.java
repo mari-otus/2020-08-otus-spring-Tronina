@@ -8,7 +8,7 @@ import java.util.Optional;
 /**
  * Репозиторий для работы с профилем пользователя.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 public interface ProfileRepository extends JpaRepository<Profile, Long> {
 

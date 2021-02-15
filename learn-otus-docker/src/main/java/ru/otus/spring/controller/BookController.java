@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  * Контроллер для работы с книгами.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 @RequiredArgsConstructor
 @Controller

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Репозиторий для работы с книгами.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 @RepositoryRestResource(path = "books")
 public interface BookRepository extends JpaRepository<Book, Long> {

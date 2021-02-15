@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * DAO для работы с вопросами для теста.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 public interface QuestionDao {
 

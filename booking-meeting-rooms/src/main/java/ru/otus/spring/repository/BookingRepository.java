@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * Репозиторий для работы с бронированием переговорной комнаты.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 public interface BookingRepository extends JpaRepository<Booking, Long>, BookingCustomRepository {
 

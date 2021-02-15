@@ -66,7 +66,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Тестирование контроллера для работы с книгами.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 @DisplayName("Контроллер BookController должен")
 @WebMvcTest(value = {BookController.class, BookMapper.class})

@@ -5,7 +5,7 @@ import java.io.InputStream;
 /**
  * Сервис для работы с сообщениями.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 public interface MessageService {
 

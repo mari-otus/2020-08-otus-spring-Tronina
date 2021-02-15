@@ -5,7 +5,7 @@ import ru.otus.spring.exception.ApplicationException;
 /**
  * Исключение, если книга не найдена.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 public class BookNotFoundException extends ApplicationException {
 

@@ -5,7 +5,7 @@ import ru.otus.spring.exception.ApplicationException;
 /**
  * Исключение, если в обработку передается книга = null.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 public class BookNullPointerException extends ApplicationException {
 

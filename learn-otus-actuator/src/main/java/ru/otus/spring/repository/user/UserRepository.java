@@ -8,7 +8,7 @@ import ru.otus.spring.domain.User;
 /**
  * Репозиторий для работы с пользователями.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 @RepositoryRestResource(path = "users", excerptProjection = SimpleUserData.class)
 public interface UserRepository extends JpaRepository<User, Long> {

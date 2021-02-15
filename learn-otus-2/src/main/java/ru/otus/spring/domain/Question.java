@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 /**
  * Объект вопроса для теста.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 @Data
 @Builder

@@ -9,7 +9,7 @@ import java.io.PrintStream;
 /**
  * Сервис для работы с сообщениями.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 @Data
 @RequiredArgsConstructor

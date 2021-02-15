@@ -15,7 +15,7 @@ import ru.otus.spring.service.RoomService;
 /**
  * Контроллер для работы с UI.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 @RequiredArgsConstructor
 @Controller

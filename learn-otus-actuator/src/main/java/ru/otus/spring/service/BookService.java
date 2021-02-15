@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Сервис для работы с книгами.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 public interface BookService {
 

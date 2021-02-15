@@ -29,7 +29,7 @@ import static ru.otus.spring.service.QuestionaryServiceImpl.YOU_ANSWER;
 /**
  * Тест для сервиса тестирования.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 @DisplayName("QuestionaryService должен")
 @ExtendWith(MockitoExtension.class)

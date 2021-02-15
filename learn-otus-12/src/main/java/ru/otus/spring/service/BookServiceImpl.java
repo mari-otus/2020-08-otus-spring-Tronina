@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Реализация сервиса для работы с книгами.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 @RequiredArgsConstructor
 @Service

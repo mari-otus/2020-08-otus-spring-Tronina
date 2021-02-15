@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 /**
  * Конфигурация инструментария миграции БД для MongoDB.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 @Configuration
 public class MongockConfig {

@@ -13,7 +13,7 @@ import java.util.Scanner;
 /**
  * Сервис для запуска тестирования.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 @RequiredArgsConstructor
 @Service

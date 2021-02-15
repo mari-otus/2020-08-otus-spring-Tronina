@@ -5,7 +5,7 @@ import ru.otus.spring.exception.ApplicationException;
 /**
  * Исключение, если список книг пуст.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 public class BookListEmptyException extends ApplicationException {
 

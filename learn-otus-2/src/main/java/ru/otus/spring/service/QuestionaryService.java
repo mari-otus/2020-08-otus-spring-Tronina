@@ -3,7 +3,7 @@ package ru.otus.spring.service;
 /**
  * Сервис для запуска тестирования.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 public interface QuestionaryService {
 

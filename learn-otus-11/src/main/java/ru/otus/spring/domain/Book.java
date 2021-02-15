@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Книга.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 @Builder
 @Data

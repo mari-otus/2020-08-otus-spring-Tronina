@@ -6,7 +6,7 @@ import ru.otus.spring.model.source.BookSource;
 /**
  * Репозиторий для работы с книгами.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 public interface BookRepository extends JpaRepository<BookSource, Long> {
 }

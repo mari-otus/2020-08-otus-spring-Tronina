@@ -15,7 +15,7 @@ import javax.persistence.Table;
 /**
  * Жанр произведения.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 @Builder
 @Data

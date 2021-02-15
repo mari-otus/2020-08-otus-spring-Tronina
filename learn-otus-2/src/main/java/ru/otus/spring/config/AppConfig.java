@@ -10,7 +10,7 @@ import ru.otus.spring.service.MessageService;
 import ru.otus.spring.service.MessageServiceImpl;
 
 /**
- * @author Mariya Tronina
+ * @author MTronina
  */
 @PropertySource("classpath:application.properties")
 @Configuration

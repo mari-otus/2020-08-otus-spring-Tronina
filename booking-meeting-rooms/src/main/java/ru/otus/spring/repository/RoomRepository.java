@@ -6,7 +6,7 @@ import ru.otus.spring.domain.Room;
 /**
  * Репозиторий для работы с переговорной комнатой.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 public interface RoomRepository extends JpaRepository<Room, Long>, RoomCustomRepository {
 

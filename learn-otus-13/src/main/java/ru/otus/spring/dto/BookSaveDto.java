@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 /**
  * Книга.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 @Builder
 @Data

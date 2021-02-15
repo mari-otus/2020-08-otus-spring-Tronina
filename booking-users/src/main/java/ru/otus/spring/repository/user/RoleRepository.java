@@ -8,7 +8,7 @@ import java.util.Optional;
 /**
  * Репозиторий для работы с ролями пользователя.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 public interface RoleRepository extends JpaRepository<UserRole, Long> {
 

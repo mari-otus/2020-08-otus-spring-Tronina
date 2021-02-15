@@ -5,7 +5,7 @@ import java.text.MessageFormat;
 /**
  * Базовое исключение.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 public class UserNotFoundException extends ApplicationException {
 

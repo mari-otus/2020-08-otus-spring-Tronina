@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 /**
  * Тестирование контроллера для работы с книгами.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 @DisplayName("Контроллер BookService должен")
 @SpringBootTest

@@ -26,7 +26,7 @@ import java.util.Set;
 /**
  * Книга.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 @Builder
 @Data

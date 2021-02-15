@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * Репозиторий для работы с пользователями.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 public interface UserRepository extends JpaRepository<User, Long>, UserCustomRepository {
 

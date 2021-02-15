@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 /**
  * Жанр произведения.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 @Builder
 @Data

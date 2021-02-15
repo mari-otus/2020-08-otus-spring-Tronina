@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Набор изменений для mongock.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 @ChangeLog
 public class DatabaseChangelog {

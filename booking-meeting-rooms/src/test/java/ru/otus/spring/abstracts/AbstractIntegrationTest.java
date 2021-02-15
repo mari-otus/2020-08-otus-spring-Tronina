@@ -1,8 +1,3 @@
-/*
- * VTB Group. Do not reproduce without permission in writing.
- * Copyright (c) 2020 VTB Group. All rights reserved.
- */
-
 package ru.otus.spring.abstracts;
 
 import com.netflix.hystrix.Hystrix;

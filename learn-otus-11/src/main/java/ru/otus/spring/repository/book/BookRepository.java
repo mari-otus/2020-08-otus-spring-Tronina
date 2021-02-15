@@ -7,7 +7,7 @@ import ru.otus.spring.domain.Book;
 /**
  * Репозиторий для работы с книгами.
  *
- * @author Mariya Tronina
+ * @author MTronina
  */
 public interface BookRepository extends ReactiveMongoRepository<Book, String> {
 
