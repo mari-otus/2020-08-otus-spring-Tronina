@@ -20,7 +20,7 @@ public class TransformMailMessageService implements TransformMessageService<Simp
     private final NotificationProperties notificationProperties;
 
     @Override
-    public SimpleMailMessage[] transform(BookingNotify bookingNotify) {
+    public SimpleMailMessage[] transformEvent(BookingNotify bookingNotify) {
         return bookingNotify.getSubscribers().stream()
                 .filter(Subscriber::isEmailNotify)
                 .map(profileUserDto -> {

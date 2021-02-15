@@ -1,8 +1,8 @@
 package ru.otus.spring.service;
 
+import ru.otus.spring.dto.BookingFilter;
 import ru.otus.spring.dto.BookingRequestDto;
 import ru.otus.spring.dto.BookingResponseDto;
-import ru.otus.spring.dto.BookingFilter;
 import ru.otus.spring.security.AuthUserDetails;
 
 import java.util.List;
@@ -22,7 +22,16 @@ public interface BookingService {
 
     BookingResponseDto getBooking(Long bookingId);
 
+    /**
+     * Переводит вес завершенные брони в статус удаленных.
+     */
     void completedBookings();
 
+    /**
+     * Возвращает список броней, которые должны начаться в ближайшие минуты.
+     *
+     * @param minutes кол-во ближайших минут, за которые ищется начало брони.
+     * @return список броней.
+     */
     List<BookingResponseDto> getSoonStartingBookings(long minutes);
 }

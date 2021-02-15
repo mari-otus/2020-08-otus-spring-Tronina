@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
+ * Бронь.
+ *
  * @author MTronina
  */
 @Builder
@@ -34,26 +36,47 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Переговорная комната.
+     */
     @ManyToOne
     @JoinColumn(name = "room_id", referencedColumnName = "id")
     private Room room;
 
+    /**
+     * Логин пользователя, создавшего бронь.
+     */
     @Column(name = "login", nullable = false)
     private String login;
 
+    /**
+     * Дата и время начала брони.
+     */
     @Column(name = "begin_date")
     private LocalDateTime beginDate;
 
+    /**
+     * Дата и время окончания брони.
+     */
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
+    /**
+     * Дата и время создания записи.
+     */
     @CreationTimestamp
     @Column(name = "create_date")
     private LocalDateTime createDate;
 
+    /**
+     * Дата и время изменения записи.
+     */
     @Column(name = "update_date")
     private LocalDateTime updateDate;
 
+    /**
+     * Дата и время удаления записи (удаление брони).
+     */
     @Column(name = "delete_date")
     private LocalDateTime deleteDate;
 }

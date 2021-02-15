@@ -11,6 +11,7 @@ public class NotificationProperties {
 
     private Email email;
     private Twilio sms;
+    private Message message;
 
     @Data
     public static class Email {
@@ -22,5 +23,11 @@ public class NotificationProperties {
         private String twilioAccountSid;
         private String twilioAuthToken;
         private String twilioPhoneNumber;
+    }
+
+    @Data
+    public static class Message {
+        private Integer capacity = 100;
+        private Integer pollingTime = 1000;
     }
 }

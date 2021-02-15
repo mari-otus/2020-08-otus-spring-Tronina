@@ -28,9 +28,12 @@ app:
   email:
     admin-email: ${admin.email}
   sms:
-    twilio-account-sid: AC6a7e417f4346adb8eceee461c195b224
-    twilio-auth-token: d08fba56cb266a663e252536733618be
-    twilio-phone-number: '+19183022060'
+    twilio-account-sid: ${twilio.account.sid}
+    twilio-auth-token: ${twilio.auth.token}
+    twilio-phone-number: ${twilio.phone.number}
+  message:
+    capacity: 200
+    polling-time: 2000
 
 logging:
   level:

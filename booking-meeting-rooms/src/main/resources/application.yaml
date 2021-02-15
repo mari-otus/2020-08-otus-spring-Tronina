@@ -58,8 +58,8 @@ app:
     enabled: true
   schedule:
     enabled: true
-    complete-bookings-cron-expression: "0 0/1 * * * *"    #Every day
-    notify-bookings-cron-expression: "0 0/1 * * * *"    #Every day
+    complete-bookings-cron-expression: "0 0/1 * * * *"  #Every minute
+    notify-bookings-cron-expression: "0 0/1 * * * *"    #Every minute
 
 logging:
   level:

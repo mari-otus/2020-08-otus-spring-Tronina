@@ -17,6 +17,8 @@ import java.security.Principal;
 import java.util.stream.Collectors;
 
 /**
+ * Управление аудитом бронирований.
+ *
  * @author MTronina
  */
 @Slf4j
@@ -27,6 +29,11 @@ public class AuditManager {
 
     private final BookingAuditRepository bookingAuditRepository;
 
+    /**
+     * Добавляет запись аудита при создании, изменении или удалении брони.
+     *
+     * @param booking информация о брони.
+     */
     public void insertAuditEntry(Booking booking) {
         try {
             Principal principal = SecurityContextHolder.getContext().getAuthentication();

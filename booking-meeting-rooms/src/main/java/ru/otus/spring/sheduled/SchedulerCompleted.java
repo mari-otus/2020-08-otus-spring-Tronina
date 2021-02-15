@@ -10,6 +10,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import ru.otus.spring.service.BookingService;
 
 /**
+ * Планировщик для перевода закончившихся броней в статус удаленных.
+ *
  * @author MTronina
  */
 @RequiredArgsConstructor

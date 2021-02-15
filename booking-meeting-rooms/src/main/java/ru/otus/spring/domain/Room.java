@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
+ * Переговорная комната.
+ *
  * @author MTronina
  */
 @Builder
@@ -32,25 +34,46 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Наименование комнаты.
+     */
     @Column(name = "room_name", nullable = false)
     private String roomName;
 
+    /**
+     * Вместимость комнаты (кол-во человек).
+     */
     @Column(name = "capacity", nullable = false)
     private int capacity;
 
+    /**
+     * Наличие кондиционера.
+     */
     @Column(name = "has_conditioner")
     private boolean hasConditioner;
 
+    /**
+     * Возможность проведения видеоконференций.
+     */
     @Column(name = "has_videoconference")
     private boolean hasVideoconference;
 
+    /**
+     * Дата и время создания записи.
+     */
     @CreationTimestamp
     @Column(name = "create_date")
     private LocalDateTime createDate;
 
+    /**
+     * Дата и время изменения записи.
+     */
     @Column(name = "update_date")
     private LocalDateTime updateDate;
 
+    /**
+     * Дата и время удаления записи (удаление переговорной комнаты).
+     */
     @Column(name = "delete_date")
     private LocalDateTime deleteDate;
 

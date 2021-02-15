@@ -12,10 +12,12 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Планировщик для запуска напоминаний о скором наступлении брони.
+ *
  * @author MTronina
  */
 @RequiredArgsConstructor
-public class SchedulerNotify {
+public class SchedulerNotification {
 
     private final BookingService bookingService;
     private final NotificationManager notificationManager;

@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
+ * Профиль пользователя.
+ *
  * @author MTronina
  */
 @Builder
@@ -29,21 +31,34 @@ public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     /**
-     * Идентификатор пользователя.
+     * Логин пользователя.
      */
     @Column(name = "login")
     private String login;
 
+    /**
+     * Email пользователя.
+     */
     @Column(name = "email")
     private String email;
 
+    /**
+     * Номер сотового телефона пользователя.
+     */
     @Column(name = "mobile_phone")
     private String mobilePhone;
 
+    /**
+     * Отправлять уведомления на email.
+     */
     @Column(name = "is_email_notify")
     private boolean isEmailNotify;
 
+    /**
+     * Отправлять уведомления по sms.
+     */
     @Column(name = "is_phone_notify")
     private boolean isPhoneNotify;
 

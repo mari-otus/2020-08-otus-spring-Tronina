@@ -29,6 +29,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
+ * Управление уведомлениями.
+ *
  * @author MTronina
  */
 @Slf4j
@@ -42,6 +44,11 @@ public class NotificationManager {
     private final NotificationClient notificationClient;
     private final UserService userService;
 
+    /**
+     * Отправляет уведомления подписчикам о действиях с переговорными комнатами (изменение, удаление, создание брони).
+     *
+     * @param booking информация о брони
+     */
     @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
     public void notifyEvent(Booking booking) {
         try {
@@ -88,6 +95,11 @@ public class NotificationManager {
         }
     }
 
+    /**
+     * Отправляет напоминание о скором наступлении брони.
+     *
+     * @param bookings
+     */
     @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
     public void notifyReminder(List<BookingResponseDto> bookings) {
         try {

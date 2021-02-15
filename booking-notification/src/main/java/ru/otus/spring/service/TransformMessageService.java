@@ -8,7 +8,7 @@ import ru.otus.spring.model.BookingNotify;
  */
 public interface TransformMessageService<T> {
 
-    T[] transform(BookingNotify message);
+    T[] transformEvent(BookingNotify message);
 
     T transformReminder(BookingNotificationReminder message);
 }

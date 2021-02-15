@@ -20,7 +20,7 @@ public class TransformSmsMessageService implements TransformMessageService<Messa
     private final NotificationProperties notificationProperties;
 
     @Override
-    public MessageCreator[] transform(BookingNotify bookingNotify) {
+    public MessageCreator[] transformEvent(BookingNotify bookingNotify) {
         Twilio.init(notificationProperties.getSms().getTwilioAccountSid(), notificationProperties.getSms().getTwilioAuthToken());
 
         return bookingNotify.getSubscribers().stream()

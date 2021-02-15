@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
+ * Подписка на переговорные комнаты.
+ *
  * @author MTronina
  */
 @Builder
@@ -34,20 +36,35 @@ public class Subscribing {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Переговорная комната.
+     */
     @ManyToOne
     @JoinColumn(name = "room_id", referencedColumnName = "id")
     private Room room;
 
+    /**
+     * Логин пользователя, создавшего подписку.
+     */
     @Column(name = "login", nullable = false)
     private String login;
 
+    /**
+     * Дата и время создания записи.
+     */
     @CreationTimestamp
     @Column(name = "create_date")
     private LocalDateTime createDate;
 
+    /**
+     * Дата и время изменения записи.
+     */
     @Column(name = "update_date")
     private LocalDateTime updateDate;
 
+    /**
+     * Дата и время удаления записи (удаление подписки).
+     */
     @Column(name = "delete_date")
     private LocalDateTime deleteDate;
 

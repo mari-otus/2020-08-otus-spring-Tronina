@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author MTronina
  */
-@Api(tags = "Сервис создания переговорок")
+@Api(tags = "Сервис работы с переговорками")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
