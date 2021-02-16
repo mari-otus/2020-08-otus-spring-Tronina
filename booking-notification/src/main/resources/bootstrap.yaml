@@ -3,41 +3,24 @@ server:
 
 spring:
   application:
-    name: booking_notification
+    name: booking-notification
   cloud:
     config:
       uri: http://localhost:7000
-#
-#  mail:
-#    host: smtp.mail.ru
-#    port: 465
-#    username: ${email.server.user}
-#    password: ${email.server.password}
-#    protocol: smtps
-#    properties:
-#      mail:
-#        smtp:
-#          auth: true
-#          starttls.enable: true
-#
-#  jackson:
-#    serialization:
-#      write_dates_as_timestamps: false
-#
-#integration:
-#  users:
-#    url: http://localhost:9003/booking_users
-#
-#app:
-#  email:
-#    admin-email: ${admin.email}
-#  sms:
-#    twilio-account-sid: ${twilio.account.sid}
-#    twilio-auth-token: ${twilio.auth.token}
-#    twilio-phone-number: ${twilio.phone.number}
-#  message:
-#    capacity: 200
-#    polling-time: 2000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:5001/eureka
+      register-with-eureka: true
+      fetch-registry: true
+  server:
+    eviction-interval-timer-in-ms: 15000
+  instance:
+    leaseRenewalIntervalInSeconds: 30
+    leaseExpirationDurationInSeconds: 90
+    instance-id: ${spring.application.name}:${server.port}
+    prefer-ip-address: true
 
 management:
   endpoints:

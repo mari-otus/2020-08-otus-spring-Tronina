@@ -3,40 +3,24 @@ server:
 
 spring:
   application:
-    name: booking_users
+    name: booking-users
   cloud:
     config:
       uri: http://localhost:7000
 
-#  datasource:
-#    driver-class-name: org.postgresql.Driver
-#    url: jdbc:postgresql://localhost:5432/booking_users
-#    username: postgres
-#    password: postgres
-#    initialization-mode: always
-#    sql-script-encoding: utf-8
-#  flyway:
-#    enabled: true
-#    encoding: UTF-8
-#    locations: classpath:/db/migration/
-#    validate-on-migrate: true
-#    baseline-on-migrate: true
-#    out-of-order: true
-#
-#  jpa:
-#    generate-ddl: false
-#    hibernate:
-#      ddl-auto: none
-#
-#    properties:
-#      hibernate:
-#        format_sql: true
-#
-#    show-sql: true
-#
-#  jackson:
-#    serialization:
-#      write_dates_as_timestamps: false
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:5001/eureka
+      register-with-eureka: true
+      fetch-registry: true
+  server:
+    eviction-interval-timer-in-ms: 15000
+  instance:
+    leaseRenewalIntervalInSeconds: 30
+    leaseExpirationDurationInSeconds: 90
+    instance-id: ${spring.application.name}:${server.port}
+    prefer-ip-address: true
 
 management:
   endpoints:

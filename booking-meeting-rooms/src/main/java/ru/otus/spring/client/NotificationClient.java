@@ -13,8 +13,7 @@ import java.util.List;
 /**
  * @author MTronina
  */
-@FeignClient(name = "notification", url = "${integration.service.notification.url}",
-        configuration = FeignAuthConfig.class)
+@FeignClient(name = "booking-notification", configuration = FeignAuthConfig.class)
 public interface NotificationClient {
 
     @PostMapping("/notification/event")

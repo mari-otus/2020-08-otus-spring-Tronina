@@ -1,5 +1,7 @@
 package ru.otus.spring.config;
 
+import com.netflix.discovery.EurekaClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Configuration;
 import ru.otus.spring.client.NotificationClient;
@@ -14,4 +16,7 @@ import ru.otus.spring.client.UserClient;
 })
 @Configuration
 public class FeignClientConfig {
+
+    @Autowired
+    private EurekaClient eurekaClient;
 }

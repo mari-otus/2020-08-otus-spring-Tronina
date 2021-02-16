@@ -9,7 +9,7 @@ import ru.otus.spring.model.UserDto;
 /**
  * @author MTronina
  */
-@FeignClient(name = "users", url = "${integration.users.url}")
+@FeignClient(name = "booking-users")
 public interface UserClient {
 
     @GetMapping("/users/{login}")

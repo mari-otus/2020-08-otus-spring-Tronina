@@ -3,67 +3,24 @@ server:
 
 spring:
   application:
-    name: booking_meeting_rooms
+    name: booking-meeting-rooms
   cloud:
     config:
       uri: http://localhost:7000
-#
-#  datasource:
-#    driver-class-name: org.postgresql.Driver
-#    url: jdbc:postgresql://localhost:5432/booking_room
-#    username: postgres
-#    password: postgres
-#    initialization-mode: always
-#    sql-script-encoding: utf-8
-#  flyway:
-#    enabled: true
-#    encoding: UTF-8
-#    locations: classpath:/db/migration/
-#    validate-on-migrate: true
-#    baseline-on-migrate: true
-#    out-of-order: true
-#
-#  data:
-#    mongodb:
-#      host: localhost
-#      port: 27018
-#      database: booking_room
-#
-#  jpa:
-#    generate-ddl: false
-#    hibernate:
-#      ddl-auto: none
-#
-#    properties:
-#      hibernate:
-#        format_sql: true
-#
-#    show-sql: true
-#
-#  jackson:
-#    serialization:
-#      write_dates_as_timestamps: false
-#
-#integration:
-#  service:
-#    users:
-#      url: http://localhost:9003/booking_users
-#    notification:
-#      url: http://localhost:9002/booking_notification
-#  auth:
-#    username: ${notification.username}
-#    password: ${notification.password}
-#
-#app:
-#  audit:
-#    enabled: true
-#    listener: hibernate #spring, hibernate
-#  notify:
-#    enabled: true
-#  schedule:
-#    enabled: true
-#    complete-bookings-cron-expression: "0 0/1 * * * *"  #Every minute
-#    notify-bookings-cron-expression: "0 0/1 * * * *"    #Every minute
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:5002/eureka
+      register-with-eureka: true
+      fetch-registry: true
+  server:
+    eviction-interval-timer-in-ms: 15000
+  instance:
+    leaseRenewalIntervalInSeconds: 30
+    leaseExpirationDurationInSeconds: 90
+    instance-id: ${spring.application.name}:${server.port}
+    prefer-ip-address: true
 
 management:
   endpoints:
@@ -81,10 +38,10 @@ feign:
     enabled: true
   client:
     config:
-      users:
+      booking-users:
         connectTimeout: 10000
         readTimeout: 20000
-      notification:
+      booking-notification:
         connectTimeout: 10000
         readTimeout: 20000
 

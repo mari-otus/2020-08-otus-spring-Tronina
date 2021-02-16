@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: eureka-server
+
+logging:
+  level:
+    ru.otus: debug
+    org.springframework: debug

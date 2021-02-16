@@ -113,7 +113,7 @@ class BookingControllerTest extends AbstractIntegrationTest {
         mockServerClient
                 .when(request()
                         .withMethod("GET")
-                        .withPath("/booking_users/users/{login}")
+                        .withPath("/users/{login}")
                         .withPathParameter("login", LOGIN_SUCCESS)
                 )
                 .respond(response()
@@ -124,7 +124,7 @@ class BookingControllerTest extends AbstractIntegrationTest {
         mockServerClient
                 .when(request()
                         .withMethod("GET")
-                        .withPath("/booking_users/users/{login}")
+                        .withPath("/users/{login}")
                         .withPathParameter("login", LOGIN_FAILED)
                 )
                 .respond(response()
