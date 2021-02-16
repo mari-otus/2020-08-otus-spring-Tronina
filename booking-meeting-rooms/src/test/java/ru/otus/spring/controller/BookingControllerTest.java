@@ -23,12 +23,13 @@ import ru.otus.spring.dto.UserDto;
 
 import java.util.stream.IntStream;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockserver.model.HttpRequest.request;
-import static org.mockserver.model.HttpResponse.response;
 
 /**
  * @author MTronina
@@ -110,25 +111,13 @@ class BookingControllerTest extends AbstractIntegrationTest {
         UserDto userDto = UserDto.builder()
                 .fio("Петров")
                 .build();
-        mockServerClient
-                .when(request()
-                        .withMethod("GET")
-                        .withPath("/users/{login}")
-                        .withPathParameter("login", LOGIN_SUCCESS)
-                )
-                .respond(response()
+        mockServer.stubFor(get(urlEqualTo("/users/" + LOGIN_SUCCESS))
+                .willReturn(aResponse()
                         .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                        .withBody(mapper.writeValueAsString(userDto))
-                );
+                        .withBody(mapper.writeValueAsString(userDto))));
 
-        mockServerClient
-                .when(request()
-                        .withMethod("GET")
-                        .withPath("/users/{login}")
-                        .withPathParameter("login", LOGIN_FAILED)
-                )
-                .respond(response()
-                        .withStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                );
+        mockServer.stubFor(get(urlEqualTo("/users/" + LOGIN_FAILED))
+                .willReturn(aResponse()
+                        .withStatus(HttpStatus.INTERNAL_SERVER_ERROR.value())));
     }
 }
